@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style/bootstrap.min.css">
+    <link href="./fontawesome/css/all.css" rel="stylesheet">
+    <link rel="stylesheet" href="./style/style.css">
+    <title>Les Petits Plats</title>
+</head>
+
+<body>
+
+    <header class="d-flex flex-column align-items-center">
+        <img class="logo" src="./assets/logo.png" alt="page d'acceuil" />
+        <h1>Les petits plats</h1>
+        <div class="form-group">
+            <input autocomplete="off" type="text" class="form-control main-search" id="search"
+                placeholder="Rechercher une recette">
+            <i class="fas fa-search"></i>
+        </div>
+        <nav class="d-flex flex-column justify-content-start align-self-start">
+            <ul class="tags d-flex"></ul>
+            <div class="d-flex justify-content-start align-self-start">
+                <div class="d-flex flex-column align-items-center justify-content-center dropdown-container">
+                    <button type="button" class="btn btn-primary btn-ingredients ingredients">Ingrédients<i
+                            class="fas fa-chevron-down  i-ingredients ingredients"></i></button>
+                    <input autocomplete="off" type="text"
+                        class="form-control dropdown-form input-ingredients ingredients" id="shearch-ingredients"
+                        placeholder="Rechercher un ingrédient, appareil, ustensiles ou une recette">
+                    <ul class="ingredients dropdown-list dropdown-list-ingredients"></ul>
+                </div>
+                <div class="d-flex flex-column align-items-center justify-content-center dropdown-container">
+                    <button type="button" class="btn btn-success btn-appareil appareil">Appareils<i
+                            class="fas fa-chevron-down  i-appareil appareil"></i></button>
+                    <input autocomplete="off" type="text" class="form-control dropdown-form input-appareil appareil"
+                        id="shearch-appareil" placeholder="Rechercher un appareil">
+                    <ul class="appareils dropdown-list dropdown-list-appareil"></ul>
+                </div>
+                <div class="d-flex flex-column align-items-center justify-content-center dropdown-container">
+                    <button type="button" class="btn btn-danger btn-ustensiles ustensiles">Ustensiles<i
+                            class="fas fa-chevron-down  i-ustensiles ustensiles"></i></button>
+                    <input autocomplete="off" type="text" class="form-control dropdown-form ustensiles input-ustensiles"
+                        id="shearch-ustensiles" placeholder="Rechercher un ustensile">
+                    <ul class="ustensile dropdown-list dropdown-list-ustensiles"></ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+</body>
+
+</html>
