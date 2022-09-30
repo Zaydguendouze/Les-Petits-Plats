@@ -8,6 +8,6 @@ const index = () => {
   article();
 };
 
-// Lancement du programme à la fin du chargement
+// Lancement du programme a la fin du chargement
 const body = document.querySelector("body");
 body.onload = index;
