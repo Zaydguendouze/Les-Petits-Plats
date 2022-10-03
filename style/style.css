@@ -52,13 +52,14 @@ main {
 article {
   border-radius: 5px;
   height: 364px;
-  width: 380px;
+  width: 480px;
   overflow: hidden;
   margin: 1vh 1vw;
+  margin-bottom: 4vh;
 }
 .recipe-img {
   height: 178px;
-  width: 380px;
+  width: 480px;
   background: #c7bebe;
 }
 

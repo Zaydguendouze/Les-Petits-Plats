@@ -31,23 +31,22 @@ searchBar.addEventListener("keyup", (e) => {
   if (recipesOnPage.length === 0) {
     console.log("test");
     const newArcticle = document.createElement("article");
-    const newHtml = `<p>Aucune recette ne correspond à votre critère… vous pouvez
+    const htmlString = `<p>Aucune recette ne correspond à votre critère… vous pouvez
     chercher « tarte aux pommes », « poisson », etc.</p>`;
-    newArcticle.innerHTML = newHtml;
+    newArcticle.innerHTML = htmlString;
     recipesList.appendChild(newArcticle);
   }
   // remplacer filter par some pour la V2
 });
 
 function init() {
-  // const res = recipes;
-  // dataArray = orderList(res);
   displayrecipes(recipes);
 }
 
 const displayrecipes = (recipes) => {
-  const htmlString = recipes.map((recipe) => {
-    return `
+  const htmlString = recipes
+    .map((recipe) => {
+      return `
     <article>
     <img class ="recipe-img" src="" alt="">
     <div class = "recipe d-flex flex-column">
@@ -78,7 +77,8 @@ const displayrecipes = (recipes) => {
     </div>
     </article>
     `;
-  });
+    })
+    .join("");
   // Ajout des recettes
   recipesList.innerHTML = htmlString;
 };
