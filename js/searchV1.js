@@ -9,44 +9,30 @@ const searchBar = document.getElementById("search");
 searchBar.addEventListener("keyup", (e) => {
   const searchString = e.target.value.toLowerCase();
 
+  if (searchString.length < 3) return;
+
+  // remplacer filter par some pour la V2
+  // function filterSearchBar(searchString)
   const filteredRecipes = recipes.filter((recipe) => {
-    return recipe.name.toLowerCase().includes(searchString);
-    // ||
-    // recipe.ingredients.toLowerCase().includes(searchString) ||
-    // recipe.description.toLowerCase().includes(searchString)
+    const isSearchInIngredients = recipe.ingredients.filter((element) =>
+      element.ingredient.toLowerCase().includes(searchString)
+    );
+    return (
+      recipe.name.toLowerCase().includes(searchString) ||
+      recipe.description.toLowerCase().includes(searchString) ||
+      isSearchInIngredients.length > 0
+    );
   });
+  // a = filteredRecipes
   displayrecipes(filteredRecipes);
   console.log(recipes);
 });
 
-function getRecipes() {
+function init() {
   // const res = recipes;
   // dataArray = orderList(res);
   displayrecipes(recipes);
 }
-
-// function orderList(data) {
-//   const orderData = data.sort((a, b) => {
-//     if (
-//       a.name.toLowerCase() < b.name.toLowerCase()
-//       // ||
-//       // a.ingredients.toLowerCase() < b.ingredients.toLowerCase() ||
-//       // a.description.toLowerCase() < b.description.toLowerCase()
-//     ) {
-//       return -1;
-//     }
-//     if (
-//       a.name.toLowerCase() < b.name.toLowerCase()
-//       // ||
-//       // a.ingredients.toLowerCase() < b.ingredients.toLowerCase() ||
-//       // a.description.toLowerCase() < b.description.toLowerCase()
-//     ) {
-//       return 1;
-//     }
-//     return 0;
-//   });
-//   return orderData;
-// }
 
 const displayrecipes = (recipes) => {
   const htmlString = recipes.map((recipe) => {
@@ -88,4 +74,4 @@ const displayrecipes = (recipes) => {
 
 console.log(recipes);
 
-getRecipes();
+init();
