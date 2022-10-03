@@ -1,18 +1,11 @@
 import { recipes } from "../data/recipes.js";
 
-// let dataArray;
+let recipesOnPage = [];
 
 const recipesList = document.querySelector("main");
 const searchBar = document.getElementById("search");
-// let allRecipes = [recipes];
 
-searchBar.addEventListener("keyup", (e) => {
-  const searchString = e.target.value.toLowerCase();
-
-  if (searchString.length < 3) return;
-
-  // remplacer filter par some pour la V2
-  // function filterSearchBar(searchString)
+export function filteredRecipes(searchString) {
   const filteredRecipes = recipes.filter((recipe) => {
     const isSearchInIngredients = recipe.ingredients.filter((element) =>
       element.ingredient.toLowerCase().includes(searchString)
@@ -23,9 +16,27 @@ searchBar.addEventListener("keyup", (e) => {
       isSearchInIngredients.length > 0
     );
   });
-  // a = filteredRecipes
+  recipesOnPage = filteredRecipes;
   displayrecipes(filteredRecipes);
-  console.log(recipes);
+  console.log(recipesOnPage);
+}
+
+searchBar.addEventListener("keyup", (e) => {
+  const searchString = e.target.value.toLowerCase();
+
+  if (searchString.length < 3) return displayrecipes(recipes);
+
+  filteredRecipes(searchString);
+
+  if (recipesOnPage.length === 0) {
+    console.log("test");
+    const newArcticle = document.createElement("article");
+    const newHtml = `<p>Aucune recette ne correspond à votre critère… vous pouvez
+    chercher « tarte aux pommes », « poisson », etc.</p>`;
+    newArcticle.innerHTML = newHtml;
+    recipesList.appendChild(newArcticle);
+  }
+  // remplacer filter par some pour la V2
 });
 
 function init() {
