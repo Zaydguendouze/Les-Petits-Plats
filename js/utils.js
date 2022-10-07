@@ -1,19 +1,23 @@
-// displayRecipe dans un tableau pour afficher les recettes
-export let displayRecipe = [];
+export function filterRecipes(searchString, originalRecipes) {
+  const filteredRecipes = originalRecipes.filter((recipe) => {
+    const isSearchInIngredients = recipe.ingredients.filter((element) =>
+      element.ingredient.toLowerCase().includes(searchString)
+    );
+    return (
+      recipe.name.toLowerCase().includes(searchString) ||
+      recipe.description.toLowerCase().includes(searchString) ||
+      isSearchInIngredients.length > 0
+    );
+  });
 
-// console.log(displayRecipe);
+  return filteredRecipes;
+}
 
-// Afficher les recettes dans un article
-export const article = () => {
-  // Constante pour afficher l'article dans le main
-  const main = document.querySelector("main");
-  displayRecipe[0].forEach((recipe) => {
-    // console.log(recipe);
-    // Pour chaque recette créer un article
-    const newArticle = document.createElement("article");
-
-    // Affichage de l'article selon la maquette dans le DOM
-    const newHtml = `
+export const displayrecipes = (recipes, recipesList) => {
+  const htmlString = recipes
+    .map((recipe) => {
+      return `
+    <article>
     <img class ="recipe-img" src="" alt="">
     <div class = "recipe d-flex flex-column">
         <div class = "mb-3 d-flex justify-content-between align-items-center">
@@ -41,9 +45,10 @@ export const article = () => {
             <p>${recipe.description}</p>
         </div>
     </div>
+    </article>
     `;
-    // Ajout des recettes
-    newArticle.innerHTML = newHtml;
-    main.appendChild(newArticle);
-  });
+    })
+    .join("");
+  // Ajout des recettes
+  recipesList.innerHTML = htmlString;
 };
