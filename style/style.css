@@ -125,3 +125,59 @@ article {
   width: 171px;
   margin: 0;
 }
+
+/* btn */
+
+.btn-success,
+.btn-success:hover,
+.btn-success:active,
+.btn-success:visited,
+.btn-success:focus,
+.dropdown-list-appareil {
+  background-color: #68d9a4;
+  border-color: #68d9a4;
+  box-shadow: none;
+  color: #ffffff;
+}
+.btn-danger,
+.btn-danger:hover,
+.btn-danger:active,
+.btn-danger:visited,
+.btn-danger:focus,
+.dropdown-list-ustensiles {
+  background-color: #ed6454;
+  border-color: #ed6454;
+  box-shadow: none;
+  color: #ffffff;
+}
+
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:visited,
+.btn-primary:focus,
+.dropdown-list-ingredients {
+  background-color: #3282F7;
+  box-shadow: none;
+  color: #ffffff;
+}
+
+.btn-primary:hover,
+.btn-danger:hover,
+.btn-success:hover {
+  filter: brightness(1.1);
+}
+
+.btn-active {
+  display: flex;
+  justify-content: flex-end;
+  width: 670px;
+  color: transparent !important;
+}
+
+.fa-chevron-down {
+  margin-left: 45px;
+}
+
+/* dropdowns */
+
