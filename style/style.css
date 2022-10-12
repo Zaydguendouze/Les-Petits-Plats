@@ -155,9 +155,9 @@ article {
 .btn-primary:hover,
 .btn-primary:active,
 .btn-primary:visited,
-.btn-primary:focus,
-.dropdown-list-ingredients {
+.btn-primary:focus {
   background-color: #3282F7;
+  border-color: #3282F7;
   box-shadow: none;
   color: #ffffff;
 }
@@ -181,3 +181,18 @@ article {
 
 /* dropdowns */
 
+
+.dropdown-list-ingredients {
+  background-color: #3282F7;
+  border-color: #3282F7;
+  box-shadow: none;
+  color: #ffffff;
+}
+
+.dropdown-list-ingredients li {
+  width: 200px;
+  font-size: 18px;
+  line-height: 22px;
+  cursor: pointer;
+  margin: 5px 0;
+}

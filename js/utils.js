@@ -1,3 +1,5 @@
+import { removeDuplicateIngredients } from "./index.js";
+
 export function filterRecipes(searchString, originalRecipes) {
   const filteredRecipes = originalRecipes.filter((recipe) => {
     const isSearchInIngredients = recipe.ingredients.filter((element) =>
@@ -13,7 +15,7 @@ export function filterRecipes(searchString, originalRecipes) {
   return filteredRecipes;
 }
 
-export const displayrecipes = (recipes, recipesList) => {
+export const displayRecipes = (recipes, recipesList) => {
   const htmlString = recipes
     .map((recipe) => {
       return `
@@ -51,4 +53,18 @@ export const displayrecipes = (recipes, recipesList) => {
     .join("");
   // Ajout des recettes
   recipesList.innerHTML = htmlString;
+};
+
+export const buildIngredientDropdown = (recipes, ingredientsList) => {
+  console.log("test function ingredientDropdown");
+
+  const ingredientsWithoutDuplicates = removeDuplicateIngredients(recipes);
+  const ingredientListDOM = ingredientsWithoutDuplicates
+    .map((ingredient) => {
+      return `
+        <li>${ingredient}</li>
+      `;
+    })
+    .join("");
+  ingredientsList.innerHTML = ingredientListDOM;
 };
