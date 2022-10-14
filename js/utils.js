@@ -1,4 +1,6 @@
 import { removeDuplicateIngredients } from "./index.js";
+import { removeDuplicateAppareils } from "./index.js";
+import { removeDuplicateUstensiles } from "./index.js";
 
 export function filterRecipes(searchString, originalRecipes) {
   const filteredRecipes = originalRecipes.filter((recipe) => {
@@ -62,9 +64,37 @@ export const buildIngredientDropdown = (recipes, ingredientsList) => {
   const ingredientListDOM = ingredientsWithoutDuplicates
     .map((ingredient) => {
       return `
-        <li>${ingredient}</li>
+        <li class="ingredient">${ingredient}</li>
       `;
     })
     .join("");
   ingredientsList.innerHTML = ingredientListDOM;
+};
+
+export const buildAppareilDropdown = (recipes, appareilsList) => {
+  console.log("test function appareilDropdown");
+
+  const appareilsWithoutDuplicates = removeDuplicateAppareils(recipes);
+  const appareilListDOM = appareilsWithoutDuplicates
+    .map((appliance) => {
+      return `
+        <li class="ingredient">${appliance}</li>
+      `;
+    })
+    .join("");
+  appareilsList.innerHTML = appareilListDOM;
+};
+
+export const buildUstensileDropdown = (recipes, ustensilesList) => {
+  console.log("test function ustensileDropdown");
+
+  const ustensilesWithoutDuplicates = removeDuplicateUstensiles(recipes);
+  const ustensilListDOM = ustensilesWithoutDuplicates
+    .map((ustensils) => {
+      return `
+        <li class="ingredient">${ustensils}</li>
+      `;
+    })
+    .join("");
+  ustensilesList.innerHTML = ustensilListDOM;
 };
