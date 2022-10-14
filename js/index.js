@@ -16,7 +16,7 @@ const recipesList = document.querySelector("main");
 searchBar.addEventListener("keyup", (e) => {
   const searchString = e.target.value.toLowerCase();
 
-  if (searchString.length < 0) return displayRecipes(recipes, recipesList);
+  if (searchString.length < 3) return displayRecipes(recipes, recipesList);
 
   const filteredRecipes = filterRecipes(searchString, recipes);
 
@@ -138,6 +138,8 @@ export function removeDuplicateUstensiles(recipes) {
 
   return [...ustensilesNames];
 }
+
+// input
 
 function init() {
   displayRecipes(recipes, recipesList);

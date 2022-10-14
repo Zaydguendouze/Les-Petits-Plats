@@ -64,7 +64,7 @@ export const buildIngredientDropdown = (recipes, ingredientsList) => {
   const ingredientListDOM = ingredientsWithoutDuplicates
     .map((ingredient) => {
       return `
-        <li class="ingredient">${ingredient}</li>
+        <li>${ingredient}</li>
       `;
     })
     .join("");
@@ -78,7 +78,7 @@ export const buildAppareilDropdown = (recipes, appareilsList) => {
   const appareilListDOM = appareilsWithoutDuplicates
     .map((appliance) => {
       return `
-        <li class="ingredient">${appliance}</li>
+        <li>${appliance}</li>
       `;
     })
     .join("");
@@ -92,7 +92,7 @@ export const buildUstensileDropdown = (recipes, ustensilesList) => {
   const ustensilListDOM = ustensilesWithoutDuplicates
     .map((ustensils) => {
       return `
-        <li class="ingredient">${ustensils}</li>
+        <li>${ustensils}</li>
       `;
     })
     .join("");
