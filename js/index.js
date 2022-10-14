@@ -40,13 +40,68 @@ const ingredientsList = document.querySelector(".dropdown-list-ingredients");
 const appareilsList = document.querySelector(".dropdown-list-appareil");
 const ustensilesList = document.querySelector(".dropdown-list-ustensiles");
 
-const btnIngredients = document.querySelector(".btn-ingredients");
-const btnAppareils = document.querySelector(".btn-appareil");
-const btnUstensiles = document.querySelector(".btn-ustensiles");
+const dropDownEventListeners = () => {
+  document
+    .querySelectorAll(".btn")
+    .forEach((e) => e.addEventListener("click", openDropdown));
+};
+let dropdownForm;
+let btn;
+let icon;
+let list;
 
-btnIngredients.addEventListener("click", openDropdownIngredients);
-btnAppareils.addEventListener("click", openDropdownAppareils);
-btnUstensiles.addEventListener("click", openDropdownUstensiles);
+const openDropdown = (e) => {
+  const target = e.target;
+  oneDropdown(target);
+  dropdownSelection(target);
+  activeDropDown();
+};
+
+const oneDropdown = (target) => {
+  const activeDropdown = document.querySelector(".dropdown-form-active");
+  if (
+    activeDropdown &&
+    !activeDropdown.classList.contains(`input-${target.classList[3]}`)
+  )
+    activeDropDown();
+};
+
+const dropdownSelection = (target) => {
+  if (target.classList.contains("ingredients")) {
+    dropdownForm = document.querySelector(".input-ingredients");
+    btn = document.querySelector(".btn-ingredients");
+    icon = document.querySelector(".i-ingredients");
+    list = document.querySelector(".dropdown-list-ingredients");
+  } else if (target.classList.contains("appareil")) {
+    dropdownForm = document.querySelector(".input-appareil");
+    btn = document.querySelector(".btn-appareil");
+    icon = document.querySelector(".i-appareil");
+    list = document.querySelector(".dropdown-list-appareil");
+  } else if (target.classList.contains("ustensiles")) {
+    dropdownForm = document.querySelector(".input-ustensiles");
+    btn = document.querySelector(".btn-ustensiles");
+    icon = document.querySelector(".i-ustensiles");
+    list = document.querySelector(".dropdown-list-ustensiles");
+  }
+};
+
+export const activeDropDown = () => {
+  if (dropdownForm.classList.contains("dropdown-form-active")) {
+    dropdownForm.classList.remove("dropdown-form-active");
+    list.classList.remove("dropdown-list-active");
+    btn.classList.remove("btn-active");
+    icon.style.transform = "rotate(0deg)";
+  } else {
+    dropdownForm.classList.add("dropdown-form-active");
+    list.classList.add("dropdown-list-active");
+    btn.classList.add("btn-active");
+    icon.style.color = "white";
+    icon.style.transform = "rotate(180deg)";
+  }
+  buildIngredientDropdown(recipes, ingredientsList);
+  buildAppareilDropdown(recipes, appareilsList);
+  buildUstensileDropdown(recipes, ustensilesList);
+};
 
 export function removeDuplicateIngredients(recipes) {
   const ingredientsNames = new Set();
@@ -84,79 +139,9 @@ export function removeDuplicateUstensiles(recipes) {
   return [...ustensilesNames];
 }
 
-const inputIngredients = document.querySelector(".input-ingredients");
-const listIngredients = document.querySelector(".dropdown-list-ingredients");
-const iconIngredients = document.querySelector(".i-ingredients");
-
-const inputAppareils = document.querySelector(".input-appareil");
-const listAppareils = document.querySelector(".dropdown-list-appareil");
-const iconAppareils = document.querySelector(".i-appareil");
-
-const inputUstensiles = document.querySelector(".input-ustensiles");
-const listUstensiles = document.querySelector(".dropdown-list-ustensiles");
-const iconUstensiles = document.querySelector(".i-ustensiles");
-
-function openDropdownIngredients() {
-  if (inputIngredients.classList.contains("dropdown-form-active")) {
-    inputIngredients.classList.remove("dropdown-form-active");
-    listIngredients.classList.remove("dropdown-list-active");
-    btnIngredients.classList.remove("btn-active");
-    iconIngredients.style.transform = "rotate(0deg)";
-  } else {
-    inputIngredients.classList.add("dropdown-form-active");
-    listIngredients.classList.add("dropdown-list-active");
-    btnIngredients.classList.add("btn-active");
-    iconIngredients.style.color = "white";
-    iconIngredients.style.transform = "rotate(180deg)";
-  }
-  buildIngredientDropdown(recipes, ingredientsList);
-}
-
-function openDropdownAppareils() {
-  if (inputAppareils.classList.contains("dropdown-form-active")) {
-    inputAppareils.classList.remove("dropdown-form-active");
-    listAppareils.classList.remove("dropdown-list-active");
-    btnAppareils.classList.remove("btn-active");
-    iconAppareils.style.transform = "rotate(0deg)";
-  } else {
-    inputAppareils.classList.add("dropdown-form-active");
-    listAppareils.classList.add("dropdown-list-active");
-    btnAppareils.classList.add("btn-active");
-    iconAppareils.style.color = "white";
-    iconAppareils.style.transform = "rotate(180deg)";
-  }
-  buildAppareilDropdown(recipes, appareilsList);
-}
-
-function openDropdownUstensiles() {
-  if (inputUstensiles.classList.contains("dropdown-form-active")) {
-    inputUstensiles.classList.remove("dropdown-form-active");
-    listUstensiles.classList.remove("dropdown-list-active");
-    btnUstensiles.classList.remove("btn-active");
-    iconUstensiles.style.transform = "rotate(0deg)";
-  } else {
-    inputUstensiles.classList.add("dropdown-form-active");
-    listUstensiles.classList.add("dropdown-list-active");
-    btnUstensiles.classList.add("btn-active");
-    iconUstensiles.style.color = "white";
-    iconUstensiles.style.transform = "rotate(180deg)";
-  }
-  buildUstensileDropdown(recipes, ustensilesList);
-}
-
-// inputIngredients.addEventListener("keyup", (e) => {
-//   const searchString = e.target.value.toLowerCase();
-
-//   if (searchString.length < 0)
-//     return filterIngredients(recipes, ingredientsList);
-
-//   const ingredientsTags = filterIngredients(searchString, recipes);
-
-//   console.log("test", ingredientsTags);
-// });
-
 function init() {
   displayRecipes(recipes, recipesList);
+  dropDownEventListeners();
 }
 
 init();
