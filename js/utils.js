@@ -64,9 +64,9 @@ export const displayRecipes = (recipes, recipesList) => {
 // ---------------------------------------------------------------------
 // ---------------------------------------------------------------------
 // type = "ingredients" || "appareils" || "ustensiles"
-export const buildDropdown  => (type, recipes, list, filtredInput) => {
-}
-buildDropdown("ingredients", recipes, ingredientsList, filtredInput);
+// export const buildDropdown  => (type, recipes, list, filtredInput) => {
+// }
+// buildDropdown("ingredients", recipes, ingredientsList, filtredInput);
 
 // ---------------------------------------------------------------------
 // ---------------------------------------------------------------------
