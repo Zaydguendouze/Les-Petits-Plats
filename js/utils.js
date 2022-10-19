@@ -17,6 +17,10 @@ export function filterRecipes(searchString, originalRecipes) {
   return filteredRecipes;
 }
 
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 export const displayRecipes = (recipes, recipesList) => {
   const htmlString = recipes
     .map((recipe) => {
@@ -57,14 +61,34 @@ export const displayRecipes = (recipes, recipesList) => {
   recipesList.innerHTML = htmlString;
 };
 
-export const buildIngredientDropdown = (recipes, ingredientsList) => {
-  console.log("test function ingredientDropdown");
+// ---------------------------------------------------------------------
+// ---------------------------------------------------------------------
+// type = "ingredients" || "appareils" || "ustensiles"
+export const buildDropdown  => (type, recipes, list, filtredInput) => {
+}
+buildDropdown("ingredients", recipes, ingredientsList, filtredInput);
 
-  const ingredientsWithoutDuplicates = removeDuplicateIngredients(recipes);
-  const ingredientListDOM = ingredientsWithoutDuplicates
+// ---------------------------------------------------------------------
+// ---------------------------------------------------------------------
+
+export const buildIngredientDropdown = (
+  recipes,
+  ingredientsList,
+  filtredInputIngredients
+) => {
+  let ingredients = [];
+
+  if (filtredInputIngredients && filtredInputIngredients.length > 0) {
+    ingredients = filtredInputIngredients;
+  } else {
+    ingredients = removeDuplicateIngredients(recipes);
+  }
+
+  const ingredientListDOM = ingredients
+    .slice(0, 30)
     .map((ingredient) => {
       return `
-        <li>${ingredient}</li>
+        <li>${capitalizeFirstLetter(ingredient)}</li>
       `;
     })
     .join("");

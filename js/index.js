@@ -8,13 +8,14 @@ import {
 } from "./utils.js";
 
 let globalRecipesState = [];
-let ingredientsTags = [];
 
 const searchBar = document.getElementById("search");
 const recipesList = document.querySelector("main");
 
 searchBar.addEventListener("keyup", (e) => {
   const searchString = e.target.value.toLowerCase();
+
+  console.log("search", searchString);
 
   if (searchString.length < 3) return displayRecipes(recipes, recipesList);
 
@@ -103,17 +104,16 @@ export const activeDropDown = () => {
   buildUstensileDropdown(recipes, ustensilesList);
 };
 
+let uniqueIngredients = [];
 export function removeDuplicateIngredients(recipes) {
   const ingredientsNames = new Set();
-
   recipes.forEach((recipe) =>
     recipe.ingredients.forEach((element) =>
-      ingredientsNames.add(element.ingredient)
+      ingredientsNames.add(element.ingredient.toLowerCase())
     )
   );
 
-  console.log(ingredientsNames);
-
+  uniqueIngredients = [...ingredientsNames];
   return [...ingredientsNames];
 }
 
@@ -121,8 +121,6 @@ export function removeDuplicateAppareils(recipes) {
   const appareilsNames = new Set();
 
   recipes.forEach((recipe) => appareilsNames.add(recipe.appliance));
-
-  console.log(appareilsNames);
 
   return [...appareilsNames];
 }
@@ -134,16 +132,31 @@ export function removeDuplicateUstensiles(recipes) {
     recipe.ustensils.forEach((ustensil) => ustensilesNames.add(ustensil))
   );
 
-  console.log(ustensilesNames);
-
   return [...ustensilesNames];
 }
 
-// input
+const appareilSearch = document.getElementById("search-appareil");
+const ustensileSearch = document.getElementById("search-ustensiles");
+const ingredientSearch = document.getElementById("search-ingredients");
+
+function displayIngredientInputSearch() {
+  ingredientSearch.addEventListener("keyup", (e) => {
+    const searchString = e.target.value.toLowerCase();
+
+    // on filtre les ingrédients par rapport à la l'input du user
+    const filteredIngredients = uniqueIngredients.filter((ingredient) => {
+      return ingredient.includes(searchString);
+    });
+
+    // REBUILD the DOM
+    buildIngredientDropdown(recipes, ingredientsList, filteredIngredients);
+  });
+}
 
 function init() {
   displayRecipes(recipes, recipesList);
   dropDownEventListeners();
+  displayIngredientInputSearch();
 }
 
 init();
