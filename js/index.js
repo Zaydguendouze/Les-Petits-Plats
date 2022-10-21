@@ -1,11 +1,5 @@
 import { recipes } from "../data/recipes.js";
-import {
-  filterRecipes,
-  displayRecipes,
-  buildIngredientDropdown,
-  buildAppareilDropdown,
-  buildUstensileDropdown,
-} from "./utils.js";
+import { filterRecipes, displayRecipes, buildDropdown } from "./utils.js";
 
 let globalRecipesState = [];
 
@@ -99,9 +93,9 @@ export const activeDropDown = () => {
     icon.style.color = "white";
     icon.style.transform = "rotate(180deg)";
   }
-  buildIngredientDropdown(recipes, ingredientsList);
-  buildAppareilDropdown(recipes, appareilsList);
-  buildUstensileDropdown(recipes, ustensilesList);
+  buildDropdown(recipes, "ingredients", ingredientsList);
+  buildDropdown(recipes, "appareils", appareilsList);
+  buildDropdown(recipes, "ustensiles", ustensilesList);
 };
 
 let uniqueIngredients = [];
@@ -117,14 +111,17 @@ export function removeDuplicateIngredients(recipes) {
   return [...ingredientsNames];
 }
 
+let uniqueAppareil = [];
 export function removeDuplicateAppareils(recipes) {
   const appareilsNames = new Set();
 
   recipes.forEach((recipe) => appareilsNames.add(recipe.appliance));
 
+  uniqueAppareil = [...appareilsNames];
   return [...appareilsNames];
 }
 
+let uniqueUstensils = [];
 export function removeDuplicateUstensiles(recipes) {
   const ustensilesNames = new Set();
 
@@ -132,6 +129,7 @@ export function removeDuplicateUstensiles(recipes) {
     recipe.ustensils.forEach((ustensil) => ustensilesNames.add(ustensil))
   );
 
+  uniqueUstensils = [...ustensilesNames];
   return [...ustensilesNames];
 }
 
@@ -139,24 +137,72 @@ const appareilSearch = document.getElementById("search-appareil");
 const ustensileSearch = document.getElementById("search-ustensiles");
 const ingredientSearch = document.getElementById("search-ingredients");
 
-function displayIngredientInputSearch() {
+function displayInputSearch() {
+  let type = "ingredients" || "appareils" || "ustensiles";
   ingredientSearch.addEventListener("keyup", (e) => {
     const searchString = e.target.value.toLowerCase();
+
+    // let type = "ingredients" || "appareils" || "ustensiles";
 
     // on filtre les ingrédients par rapport à la l'input du user
     const filteredIngredients = uniqueIngredients.filter((ingredient) => {
       return ingredient.includes(searchString);
     });
 
+    // const filteredAppareil = uniqueIngredients.filter((appliance) => {
+    //   return appliance.includes(searchString);
+    // });
+
+    // const filteredUstensiles = uniqueIngredients.filter((ustensils) => {
+    //   return ustensils.includes(searchString);
+    // });
+
+    console.log(filteredIngredients);
     // REBUILD the DOM
-    buildIngredientDropdown(recipes, ingredientsList, filteredIngredients);
+    if (type === "ingredients") {
+      buildDropdown(recipes, type, ingredientsList, filteredIngredients);
+    }
+
+    // if (type === "appareils") {
+    //   buildDropdown(recipes, "appareils", appareilsList, filteredAppareil);
+    // }
+
+    // if (type === "ustensiles") {
+    //   buildDropdown(recipes, "ustensiles", ustensilesList, filteredUstensiles);
+    // }
+  });
+
+  appareilSearch.addEventListener("keyup", (e) => {
+    const searchString = e.target.value.toLowerCase();
+
+    const filteredAppareil = uniqueAppareil.filter((appliance) => {
+      return appliance.includes(searchString);
+    });
+
+    console.log(filteredAppareil);
+    if (type === "appareils") {
+      buildDropdown(recipes, type, appareilsList, filteredAppareil);
+    }
+  });
+
+  ustensileSearch.addEventListener("keyup", (e) => {
+    const searchString = e.target.value.toLowerCase();
+
+    const filteredUstensiles = uniqueUstensils.filter((ustensils) => {
+      return ustensils.includes(searchString);
+    });
+
+    console.log(filteredUstensiles);
+    if (type === "ustensiles") {
+      buildDropdown(recipes, type, ustensilesList, filteredUstensiles);
+    }
   });
 }
 
 function init() {
   displayRecipes(recipes, recipesList);
   dropDownEventListeners();
-  displayIngredientInputSearch();
+  displayInputSearch();
 }
 
 init();

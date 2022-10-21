@@ -70,6 +70,75 @@ export const displayRecipes = (recipes, recipesList) => {
 
 // ---------------------------------------------------------------------
 // ---------------------------------------------------------------------
+// let type = "ingredients" || "appareils" || "ustensiles";
+
+export const buildDropdown = (recipes, type, list, filtredInput) => {
+  let ingredients = [];
+  let appareils = [];
+  let ustensiles = [];
+  // type = "ingredients" || "appareils" || "ustensiles";
+  // list = ingredientList || appareilList || ustensilList;
+
+  switch (type) {
+    case "ingredients":
+      if (filtredInput && filtredInput.length > 0 && type === "ingredients") {
+        ingredients = filtredInput;
+      } else {
+        ingredients = removeDuplicateIngredients(recipes);
+        console.log(list);
+      }
+
+      const ingredientListDOM = ingredients
+        .slice(0, 30)
+        .map((ingredient) => {
+          return `
+        <li>${capitalizeFirstLetter(ingredient)}</li>
+      `;
+        })
+        .join("");
+      list.innerHTML = ingredientListDOM;
+      break;
+
+    case "appareils":
+      if (filtredInput && filtredInput.length > 0 && type === "appareils") {
+        appareils = filtredInput;
+      } else {
+        appareils = removeDuplicateAppareils(recipes);
+        console.log(list);
+      }
+
+      const appareilListDOM = appareils
+        .slice(0, 30)
+        .map((appliance) => {
+          return `
+        <li>${capitalizeFirstLetter(appliance)}</li>
+      `;
+        })
+        .join("");
+      list.innerHTML = appareilListDOM;
+      break;
+
+    case "ustensiles":
+      if (filtredInput && filtredInput.length > 0) {
+        ustensiles = filtredInput;
+      } else {
+        ustensiles = removeDuplicateUstensiles(recipes);
+        console.log(list);
+      }
+
+      const ustensilListDOM = ustensiles
+        .slice(0, 30)
+        .map((ustensils) => {
+          return `
+        <li>${capitalizeFirstLetter(ustensils)}</li>
+      `;
+        })
+        .join("");
+      list.innerHTML = ustensilListDOM;
+      break;
+  }
+  return list;
+};
 
 export const buildIngredientDropdown = (
   recipes,
