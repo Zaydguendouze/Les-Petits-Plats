@@ -1,33 +1,69 @@
 import { recipes } from "../data/recipes.js";
-import {
-  filterRecipes,
-  displayRecipes,
-  buildIngredientDropdown,
-  buildAppareilDropdown,
-  buildUstensileDropdown,
-} from "./utils.js";
+import { buildDropdown } from "./utils.js";
 
-const ingredientSearch = document.getElementById("search-ingredients");
-const appareilSearch = document.getElementById("search-appareil");
-const ustensileSearch = document.getElementById("search-ustensiles");
+const ingredientsList = document.querySelector(".dropdown-list-ingredients");
+const appareilsList = document.querySelector(".dropdown-list-appareil");
+const ustensilesList = document.querySelector(".dropdown-list-ustensiles");
 
-export function displayIngredientInputSearch(recipes, ingredientsList) {
-  //   const allIngredients = ingredientsNames;
+export const dropDownEventListeners = () => {
+  document
+    .querySelectorAll(".btn")
+    .forEach((e) => e.addEventListener("click", openDropdown));
+};
+let dropdownForm;
+let btn;
+let icon;
+let list;
 
-  //   console.log(allIngredients);
-  //   const ingredient = ingredientSearch.addEventListener("keyup", (e) => {
-  //     const searchString = e.target.value.toLowerCase();
+const openDropdown = (e) => {
+  const target = e.target;
+  oneDropdown(target);
+  dropdownSelection(target);
+  activeDropDown();
+};
 
-  //     if (searchString.length < 3)
-  //       return buildIngredientDropdown(ingredientsList);
+const oneDropdown = (target) => {
+  const activeDropdown = document.querySelector(".dropdown-form-active");
+  if (
+    activeDropdown &&
+    !activeDropdown.classList.contains(`input-${target.classList[3]}`)
+  )
+    activeDropDown();
+};
 
-  //     // const filteredIngredients = removeDuplicateIngredients(
-  //     //   searchString,
-  //     //   recipes
-  //     // );
+const dropdownSelection = (target) => {
+  if (target.classList.contains("ingredients")) {
+    dropdownForm = document.querySelector(".input-ingredients");
+    btn = document.querySelector(".btn-ingredients");
+    icon = document.querySelector(".i-ingredients");
+    list = document.querySelector(".dropdown-list-ingredients");
+  } else if (target.classList.contains("appareil")) {
+    dropdownForm = document.querySelector(".input-appareil");
+    btn = document.querySelector(".btn-appareil");
+    icon = document.querySelector(".i-appareil");
+    list = document.querySelector(".dropdown-list-appareil");
+  } else if (target.classList.contains("ustensiles")) {
+    dropdownForm = document.querySelector(".input-ustensiles");
+    btn = document.querySelector(".btn-ustensiles");
+    icon = document.querySelector(".i-ustensiles");
+    list = document.querySelector(".dropdown-list-ustensiles");
+  }
+};
 
-  //     // buildIngredientDropdown(filteredIngredients, ingredientsList);
-
-  console.log("test", recipes);
-  //   });
-}
+export const activeDropDown = () => {
+  if (dropdownForm.classList.contains("dropdown-form-active")) {
+    dropdownForm.classList.remove("dropdown-form-active");
+    list.classList.remove("dropdown-list-active");
+    btn.classList.remove("btn-active");
+    icon.style.transform = "rotate(0deg)";
+  } else {
+    dropdownForm.classList.add("dropdown-form-active");
+    list.classList.add("dropdown-list-active");
+    btn.classList.add("btn-active");
+    icon.style.color = "white";
+    icon.style.transform = "rotate(180deg)";
+  }
+  buildDropdown(recipes, "ingredients", ingredientsList);
+  buildDropdown(recipes, "appareils", appareilsList);
+  buildDropdown(recipes, "ustensiles", ustensilesList);
+};

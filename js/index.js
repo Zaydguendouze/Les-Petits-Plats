@@ -1,5 +1,6 @@
 import { recipes } from "../data/recipes.js";
 import { filterRecipes, displayRecipes, buildDropdown } from "./utils.js";
+import { dropDownEventListeners } from "./dropdowns.js";
 
 let globalRecipesState = [];
 
@@ -34,69 +35,6 @@ searchBar.addEventListener("keyup", (e) => {
 const ingredientsList = document.querySelector(".dropdown-list-ingredients");
 const appareilsList = document.querySelector(".dropdown-list-appareil");
 const ustensilesList = document.querySelector(".dropdown-list-ustensiles");
-
-const dropDownEventListeners = () => {
-  document
-    .querySelectorAll(".btn")
-    .forEach((e) => e.addEventListener("click", openDropdown));
-};
-let dropdownForm;
-let btn;
-let icon;
-let list;
-
-const openDropdown = (e) => {
-  const target = e.target;
-  oneDropdown(target);
-  dropdownSelection(target);
-  activeDropDown();
-};
-
-const oneDropdown = (target) => {
-  const activeDropdown = document.querySelector(".dropdown-form-active");
-  if (
-    activeDropdown &&
-    !activeDropdown.classList.contains(`input-${target.classList[3]}`)
-  )
-    activeDropDown();
-};
-
-const dropdownSelection = (target) => {
-  if (target.classList.contains("ingredients")) {
-    dropdownForm = document.querySelector(".input-ingredients");
-    btn = document.querySelector(".btn-ingredients");
-    icon = document.querySelector(".i-ingredients");
-    list = document.querySelector(".dropdown-list-ingredients");
-  } else if (target.classList.contains("appareil")) {
-    dropdownForm = document.querySelector(".input-appareil");
-    btn = document.querySelector(".btn-appareil");
-    icon = document.querySelector(".i-appareil");
-    list = document.querySelector(".dropdown-list-appareil");
-  } else if (target.classList.contains("ustensiles")) {
-    dropdownForm = document.querySelector(".input-ustensiles");
-    btn = document.querySelector(".btn-ustensiles");
-    icon = document.querySelector(".i-ustensiles");
-    list = document.querySelector(".dropdown-list-ustensiles");
-  }
-};
-
-export const activeDropDown = () => {
-  if (dropdownForm.classList.contains("dropdown-form-active")) {
-    dropdownForm.classList.remove("dropdown-form-active");
-    list.classList.remove("dropdown-list-active");
-    btn.classList.remove("btn-active");
-    icon.style.transform = "rotate(0deg)";
-  } else {
-    dropdownForm.classList.add("dropdown-form-active");
-    list.classList.add("dropdown-list-active");
-    btn.classList.add("btn-active");
-    icon.style.color = "white";
-    icon.style.transform = "rotate(180deg)";
-  }
-  buildDropdown(recipes, "ingredients", ingredientsList);
-  buildDropdown(recipes, "appareils", appareilsList);
-  buildDropdown(recipes, "ustensiles", ustensilesList);
-};
 
 let uniqueIngredients = [];
 export function removeDuplicateIngredients(recipes) {
@@ -138,41 +76,21 @@ const ustensileSearch = document.getElementById("search-ustensiles");
 const ingredientSearch = document.getElementById("search-ingredients");
 
 function displayInputSearch() {
-  let type = "ingredients" || "appareils" || "ustensiles";
   ingredientSearch.addEventListener("keyup", (e) => {
+    let type = "ingredients";
     const searchString = e.target.value.toLowerCase();
 
-    // let type = "ingredients" || "appareils" || "ustensiles";
-
-    // on filtre les ingrédients par rapport à la l'input du user
     const filteredIngredients = uniqueIngredients.filter((ingredient) => {
       return ingredient.includes(searchString);
     });
 
-    // const filteredAppareil = uniqueIngredients.filter((appliance) => {
-    //   return appliance.includes(searchString);
-    // });
-
-    // const filteredUstensiles = uniqueIngredients.filter((ustensils) => {
-    //   return ustensils.includes(searchString);
-    // });
-
     console.log(filteredIngredients);
-    // REBUILD the DOM
-    if (type === "ingredients") {
-      buildDropdown(recipes, type, ingredientsList, filteredIngredients);
-    }
 
-    // if (type === "appareils") {
-    //   buildDropdown(recipes, "appareils", appareilsList, filteredAppareil);
-    // }
-
-    // if (type === "ustensiles") {
-    //   buildDropdown(recipes, "ustensiles", ustensilesList, filteredUstensiles);
-    // }
+    buildDropdown(recipes, type, ingredientsList, filteredIngredients);
   });
 
   appareilSearch.addEventListener("keyup", (e) => {
+    let type = "appareils";
     const searchString = e.target.value.toLowerCase();
 
     const filteredAppareil = uniqueAppareil.filter((appliance) => {
@@ -180,12 +98,11 @@ function displayInputSearch() {
     });
 
     console.log(filteredAppareil);
-    if (type === "appareils") {
-      buildDropdown(recipes, type, appareilsList, filteredAppareil);
-    }
+    buildDropdown(recipes, type, appareilsList, filteredAppareil);
   });
 
   ustensileSearch.addEventListener("keyup", (e) => {
+    let type = "ustensiles";
     const searchString = e.target.value.toLowerCase();
 
     const filteredUstensiles = uniqueUstensils.filter((ustensils) => {
@@ -193,9 +110,7 @@ function displayInputSearch() {
     });
 
     console.log(filteredUstensiles);
-    if (type === "ustensiles") {
-      buildDropdown(recipes, type, ustensilesList, filteredUstensiles);
-    }
+    buildDropdown(recipes, type, ustensilesList, filteredUstensiles);
   });
 }
 

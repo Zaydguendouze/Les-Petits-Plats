@@ -61,23 +61,10 @@ export const displayRecipes = (recipes, recipesList) => {
   recipesList.innerHTML = htmlString;
 };
 
-// ---------------------------------------------------------------------
-// ---------------------------------------------------------------------
-// type = "ingredients" || "appareils" || "ustensiles"
-// export const buildDropdown  => (type, recipes, list, filtredInput) => {
-// }
-// buildDropdown("ingredients", recipes, ingredientsList, filtredInput);
-
-// ---------------------------------------------------------------------
-// ---------------------------------------------------------------------
-// let type = "ingredients" || "appareils" || "ustensiles";
-
 export const buildDropdown = (recipes, type, list, filtredInput) => {
   let ingredients = [];
   let appareils = [];
   let ustensiles = [];
-  // type = "ingredients" || "appareils" || "ustensiles";
-  // list = ingredientList || appareilList || ustensilList;
 
   switch (type) {
     case "ingredients":
@@ -108,7 +95,6 @@ export const buildDropdown = (recipes, type, list, filtredInput) => {
       }
 
       const appareilListDOM = appareils
-        .slice(0, 30)
         .map((appliance) => {
           return `
         <li>${capitalizeFirstLetter(appliance)}</li>
@@ -119,7 +105,7 @@ export const buildDropdown = (recipes, type, list, filtredInput) => {
       break;
 
     case "ustensiles":
-      if (filtredInput && filtredInput.length > 0) {
+      if (filtredInput && filtredInput.length > 0 && type === "ustensiles") {
         ustensiles = filtredInput;
       } else {
         ustensiles = removeDuplicateUstensiles(recipes);
@@ -138,56 +124,4 @@ export const buildDropdown = (recipes, type, list, filtredInput) => {
       break;
   }
   return list;
-};
-
-export const buildIngredientDropdown = (
-  recipes,
-  ingredientsList,
-  filtredInputIngredients
-) => {
-  let ingredients = [];
-
-  if (filtredInputIngredients && filtredInputIngredients.length > 0) {
-    ingredients = filtredInputIngredients;
-  } else {
-    ingredients = removeDuplicateIngredients(recipes);
-  }
-
-  const ingredientListDOM = ingredients
-    .slice(0, 30)
-    .map((ingredient) => {
-      return `
-        <li>${capitalizeFirstLetter(ingredient)}</li>
-      `;
-    })
-    .join("");
-  ingredientsList.innerHTML = ingredientListDOM;
-};
-
-export const buildAppareilDropdown = (recipes, appareilsList) => {
-  console.log("test function appareilDropdown");
-
-  const appareilsWithoutDuplicates = removeDuplicateAppareils(recipes);
-  const appareilListDOM = appareilsWithoutDuplicates
-    .map((appliance) => {
-      return `
-        <li>${appliance}</li>
-      `;
-    })
-    .join("");
-  appareilsList.innerHTML = appareilListDOM;
-};
-
-export const buildUstensileDropdown = (recipes, ustensilesList) => {
-  console.log("test function ustensileDropdown");
-
-  const ustensilesWithoutDuplicates = removeDuplicateUstensiles(recipes);
-  const ustensilListDOM = ustensilesWithoutDuplicates
-    .map((ustensils) => {
-      return `
-        <li>${ustensils}</li>
-      `;
-    })
-    .join("");
-  ustensilesList.innerHTML = ustensilListDOM;
 };
