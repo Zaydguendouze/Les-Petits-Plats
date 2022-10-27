@@ -19,7 +19,7 @@ let list;
 
 const openDropdown = (e) => {
   const target = e.target;
-  // oneDropdown(target);
+  oneDropdown(target);
   dropdownSelection(target);
   activateDropDown();
 };
@@ -30,8 +30,7 @@ const oneDropdown = (target) => {
     activeDropdown &&
     !activeDropdown.classList.contains(`input-${target.classList[3]}`)
   )
-    console.log(activeDropdown);
-  activateDropDown();
+    activateDropDown();
 };
 
 const dropdownSelection = (target) => {
