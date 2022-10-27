@@ -1,6 +1,8 @@
 import { removeDuplicateIngredients } from "./index.js";
 import { removeDuplicateAppareils } from "./index.js";
 import { removeDuplicateUstensiles } from "./index.js";
+import { createTags } from "./dropdowns.js";
+import { removeTags } from "./dropdowns.js";
 
 export function filterRecipes(searchString, originalRecipes) {
   const filteredRecipes = originalRecipes.filter((recipe) => {
@@ -78,13 +80,13 @@ export const buildDropdown = (recipes, type, list, filtredInput) => {
         .slice(0, 30)
         .map((ingredient) => {
           return `
-        <li class="list" id="${capitalizeFirstLetter(
-          ingredient
-        )}" >${capitalizeFirstLetter(ingredient)}</li>
+        <li class="li-${type} tag">${capitalizeFirstLetter(ingredient)}</li>
       `;
         })
         .join("");
       list.innerHTML = ingredientListDOM;
+      list.addEventListener("click", createTags);
+      list.addEventListener("click", removeTags);
       break;
 
     case "appareils":
@@ -97,13 +99,13 @@ export const buildDropdown = (recipes, type, list, filtredInput) => {
       const appareilListDOM = appareils
         .map((appliance) => {
           return `
-        <li class="list" id="${capitalizeFirstLetter(
-          appliance
-        )}">${capitalizeFirstLetter(appliance)}</li>
+        <li class="li-${type}">${capitalizeFirstLetter(appliance)}</li>
       `;
         })
         .join("");
       list.innerHTML = appareilListDOM;
+      list.addEventListener("click", createTags);
+      list.addEventListener("click", removeTags);
       break;
 
     case "ustensiles":
@@ -117,55 +119,15 @@ export const buildDropdown = (recipes, type, list, filtredInput) => {
         .slice(0, 30)
         .map((ustensils) => {
           return `
-        <li class="list" id="${capitalizeFirstLetter(
-          ustensils
-        )}">${capitalizeFirstLetter(ustensils)}</li>
+        <li class="li-${type}">${capitalizeFirstLetter(ustensils)}</li>
       `;
         })
         .join("");
       list.innerHTML = ustensilListDOM;
+      list.addEventListener("click", createTags);
+      list.addEventListener("click", removeTags);
       break;
   }
 
-  const allLi = document.querySelectorAll(".list");
-  const tags = document.querySelector(".tags");
-
-  allLi.forEach((li) => {
-    li.addEventListener("click", (e) => {
-      // avec l'event récupérer l'id
-      // filterDropdown
-      const tag = document.createElement("li");
-      tag.classList.add("tagClass", "tagCreated");
-      tag.id = li.id;
-      tag.textContent = li.textContent;
-      tag.innerHTML += '<i class="far fa-times-circle" id="cross"></i>';
-      if (type === "ingredients") {
-        tag.style.backgroundColor = "#3282f7";
-        // uniqueIngredients = uniqueIngredients.filter(
-        //   (i) => i === li.textContent
-        // );
-      } else if (type === "appareils") {
-        tag.style.backgroundColor = "#68d9a4";
-      } else if (type === "ustensiles") {
-        tag.style.backgroundColor = "#ed6454";
-      }
-      tags.appendChild(tag);
-    });
-  });
-
-  removeTag();
   return list;
 };
-
-export function removeTag() {
-  let tagClose = document.querySelectorAll("#cross");
-  let tagHtmlDOM = document.getElementsByClassName("tagCreated");
-
-  tagClose.forEach((tag) => {
-    // au clic de la croix sur un tag
-    tag.addEventListener("click", () => {
-      console.log("test");
-      tag.parentNode.remove();
-    });
-  });
-}

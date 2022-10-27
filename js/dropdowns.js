@@ -1,11 +1,10 @@
 import { recipes } from "../data/recipes.js";
 import { buildDropdown } from "./utils.js";
+import { uniqueIngredients } from "./index.js";
 
 const ingredientsList = document.querySelector(".dropdown-list-ingredients");
 const appareilsList = document.querySelector(".dropdown-list-appareil");
 const ustensilesList = document.querySelector(".dropdown-list-ustensiles");
-
-// donner des ids aux dropdowns et au clic, ouvrir celui qui correspond à l'id
 
 export const dropDownEventListeners = () => {
   document
@@ -68,4 +67,32 @@ const activateDropDown = () => {
   buildDropdown(recipes, "ingredients", ingredientsList);
   buildDropdown(recipes, "appareils", appareilsList);
   buildDropdown(recipes, "ustensiles", ustensilesList);
+};
+
+export const createTags = (e) => {
+  const tags = document.querySelector(".tags");
+  const tagList = e.target;
+  console.log("target", e.target);
+  const tag = document.createElement("li");
+  const newHtml = `${tagList.innerText}<i id = "${tagList.innerText}" class="far fa-times-circle cross"></i>`;
+  console.log("newHtml", newHtml);
+  if (tagList.classList.contains("li-ingredients")) {
+    tag.classList.add(`tag-ingredient`);
+  } else if (tagList.classList.contains("li-appareils")) {
+    tag.classList.add(`tag-appliance`);
+  } else if (tagList.classList.contains("li-ustensiles")) {
+    tag.classList.add(`tag-ustensils`);
+  }
+  tag.innerHTML = newHtml;
+  tags.appendChild(tag);
+};
+
+export const removeTags = () => {
+  let tagCross = document.querySelectorAll(".cross");
+  let tags = document.querySelectorAll(".tag");
+
+  tagCross.forEach((tag) =>
+    tag.addEventListener("click", () => tag.parentNode.remove())
+  );
+  console.log("test", tags);
 };

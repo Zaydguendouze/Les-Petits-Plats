@@ -51,7 +51,7 @@ const ingredientsList = document.querySelector(".dropdown-list-ingredients");
 const appareilsList = document.querySelector(".dropdown-list-appareil");
 const ustensilesList = document.querySelector(".dropdown-list-ustensiles");
 
-var uniqueIngredients = [];
+export let uniqueIngredients = [];
 export function removeDuplicateIngredients(recipes) {
   const ingredientsNames = new Set();
   recipes.forEach((recipe) =>
