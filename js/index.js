@@ -1,22 +1,12 @@
 import { recipes } from "../data/recipes.js";
-import {
-  filterRecipes,
-  displayRecipes,
-  buildDropdown,
-  // createTags,
-  // addNewTag,
-  // createTag,
-} from "./utils.js";
-import {
-  dropDownEventListeners,
-  // createTags,
-  // addNewTag,
-  // tagRecover,
-} from "./dropdowns.js";
+import { filterRecipes, displayRecipes, buildDropdown } from "./utils.js";
+import { dropDownEventListeners } from "./dropdowns.js";
 
 /* Global variables --------------------------------- */
 let globalRecipesState = [];
-
+let uniqueIngredients = [];
+let uniqueAppareil = [];
+let uniqueUstensils = [];
 /* Global variables -------------------------------- */
 
 const searchBar = document.getElementById("search");
@@ -25,8 +15,6 @@ const recipesList = document.querySelector("main");
 searchBar.addEventListener("keyup", (e) => {
   const searchString = e.target.value.toLowerCase();
 
-  console.log("search", searchString);
-
   if (searchString.length < 3) return displayRecipes(recipes, recipesList);
 
   const filteredRecipes = filterRecipes(searchString, recipes);
@@ -34,11 +22,8 @@ searchBar.addEventListener("keyup", (e) => {
   globalRecipesState = filteredRecipes;
 
   displayRecipes(filteredRecipes, recipesList);
-  console.log("globalRecipesState", globalRecipesState);
-  console.log("filteredRecipes", filteredRecipes);
 
   if (globalRecipesState.length === 0) {
-    console.log("test fonction d'erreur");
     const newArcticle = document.createElement("article");
     const htmlString = `<p>Aucune recette ne correspond à votre critère… vous pouvez
     chercher « tarte aux pommes », « poisson », etc.</p>`;
@@ -51,7 +36,6 @@ const ingredientsList = document.querySelector(".dropdown-list-ingredients");
 const appareilsList = document.querySelector(".dropdown-list-appareil");
 const ustensilesList = document.querySelector(".dropdown-list-ustensiles");
 
-export let uniqueIngredients = [];
 export function removeDuplicateIngredients(recipes) {
   const ingredientsNames = new Set();
   recipes.forEach((recipe) =>
@@ -64,7 +48,6 @@ export function removeDuplicateIngredients(recipes) {
   return [...ingredientsNames];
 }
 
-let uniqueAppareil = [];
 export function removeDuplicateAppareils(recipes) {
   const appareilsNames = new Set();
 
@@ -76,7 +59,6 @@ export function removeDuplicateAppareils(recipes) {
   return [...appareilsNames];
 }
 
-let uniqueUstensils = [];
 export function removeDuplicateUstensiles(recipes) {
   const ustensilesNames = new Set();
 
@@ -102,8 +84,6 @@ function displayInputSearch() {
       return ingredient.includes(searchString);
     });
 
-    console.log(filteredIngredients);
-
     buildDropdown(recipes, "ingredients", ingredientsList, filteredIngredients);
   });
 
@@ -114,7 +94,6 @@ function displayInputSearch() {
       return appliance.includes(searchString);
     });
 
-    console.log(filteredAppareil);
     buildDropdown(recipes, "appareils", appareilsList, filteredAppareil);
   });
 
@@ -125,69 +104,14 @@ function displayInputSearch() {
       return ustensils.includes(searchString);
     });
 
-    console.log(type);
     buildDropdown(recipes, "ustensiles", ustensilesList, filteredUstensiles);
   });
 }
-
-// function createTag() {
-//   const allLi = document.querySelectorAll(".list");
-//   const tags = document.querySelector(".tags");
-
-//   allLi.forEach((li) => {
-//     li.addEventListener("click", () => {
-//       // const tag = document.createElement("li");
-//       console.log("test");
-//     });
-//   });
-// }
-
-// const createTags = (e) => {
-//   const tagsList = document.querySelector(".tags");
-//   const list = e.target;
-//   const newTag = document.createElement("li");
-//   const newTagDOM = `${list.innerText} <i id = "${list.innerText}" class="far fa-times-circle"></i>`;
-//   if (list.classList.contains("li-ingredients")) {
-//     newTag.classList.add("tag-ingredients");
-//   } else if (list.classList.contains("li-appliance")) {
-//     newTag.classList.add(`tag-appliance`);
-//   } else if (list.classList.contains("li-ustensils")) {
-//     newTag.classList.add(`tag-ustensils`);
-//   }
-
-//   newTag.innerHTML = newTagDOM;
-//   tagsList.appendChild(newTag);
-//   const newSearchTag = tagLi.innerText.split(" ");
-//   splitClean(newSearchTag);
-//   newSearchTag.forEach((newT) => {
-//     if (list.classList.contains("li-ingredients"))
-//       addNewTag(uniqueIngredients[0], newT);
-//     else if (list.classList.contains("li-appliance"))
-//       addNewTag(uniqueAppareil[0], newT);
-//     else if (list.classList.contains("li-ustensils"))
-//       addNewTag(uniqueUstensils[0], newT);
-//   });
-
-//   buildDropdown();
-// };
-
-// const addNewTag = (tagsArray, newTag) => {
-//   let tags = 0;
-//   console.log(tagsArray);
-//   tagsArray.forEach((currentTag) => {
-//     if (currentTag === newTag) tags++;
-//   });
-//   if (tags === 0) tagsArray.push(newTag);
-// };
 
 function init() {
   displayRecipes(recipes, recipesList);
   dropDownEventListeners();
   displayInputSearch();
-  // createTag();
-  // createTags();
-  // addNewTag();
-  // tagRecover();
 }
 
 init();

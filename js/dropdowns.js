@@ -1,6 +1,5 @@
 import { recipes } from "../data/recipes.js";
 import { buildDropdown } from "./utils.js";
-import { uniqueIngredients } from "./index.js";
 
 const ingredientsList = document.querySelector(".dropdown-list-ingredients");
 const appareilsList = document.querySelector(".dropdown-list-appareil");
