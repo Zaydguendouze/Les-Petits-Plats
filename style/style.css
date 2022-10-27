@@ -249,3 +249,30 @@ article {
   margin-right: 2vw;
   padding: 22px 20px;
 }
+
+/* tags */
+.tags {
+  margin-bottom: 15px;
+}
+.tags li {
+    margin : 0 5px;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 14px;
+  line-height: 17px;
+  color: #ffffff;
+}
+.tag-ingredient {
+  background: #3282f7;
+}
+.tag-appliance {
+  background: #68d9a4;
+}
+.tag-ustensils {
+  background: #ed6454;
+}
+.fa-times-circle {
+  font-size: 18px;
+  padding-left: 10px;
+  cursor: pointer;
+}

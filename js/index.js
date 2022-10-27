@@ -1,8 +1,23 @@
 import { recipes } from "../data/recipes.js";
-import { filterRecipes, displayRecipes, buildDropdown } from "./utils.js";
-import { dropDownEventListeners } from "./dropdowns.js";
+import {
+  filterRecipes,
+  displayRecipes,
+  buildDropdown,
+  // createTags,
+  // addNewTag,
+  // createTag,
+} from "./utils.js";
+import {
+  dropDownEventListeners,
+  // createTags,
+  // addNewTag,
+  // tagRecover,
+} from "./dropdowns.js";
 
+/* Global variables --------------------------------- */
 let globalRecipesState = [];
+
+/* Global variables -------------------------------- */
 
 const searchBar = document.getElementById("search");
 const recipesList = document.querySelector("main");
@@ -36,7 +51,7 @@ const ingredientsList = document.querySelector(".dropdown-list-ingredients");
 const appareilsList = document.querySelector(".dropdown-list-appareil");
 const ustensilesList = document.querySelector(".dropdown-list-ustensiles");
 
-let uniqueIngredients = [];
+var uniqueIngredients = [];
 export function removeDuplicateIngredients(recipes) {
   const ingredientsNames = new Set();
   recipes.forEach((recipe) =>
@@ -53,7 +68,9 @@ let uniqueAppareil = [];
 export function removeDuplicateAppareils(recipes) {
   const appareilsNames = new Set();
 
-  recipes.forEach((recipe) => appareilsNames.add(recipe.appliance));
+  recipes.forEach((recipe) =>
+    appareilsNames.add(recipe.appliance.toLowerCase())
+  );
 
   uniqueAppareil = [...appareilsNames];
   return [...appareilsNames];
@@ -64,7 +81,9 @@ export function removeDuplicateUstensiles(recipes) {
   const ustensilesNames = new Set();
 
   recipes.forEach((recipe) =>
-    recipe.ustensils.forEach((ustensil) => ustensilesNames.add(ustensil))
+    recipe.ustensils.forEach((ustensil) =>
+      ustensilesNames.add(ustensil.toLowerCase())
+    )
   );
 
   uniqueUstensils = [...ustensilesNames];
@@ -77,7 +96,6 @@ const ingredientSearch = document.getElementById("search-ingredients");
 
 function displayInputSearch() {
   ingredientSearch.addEventListener("keyup", (e) => {
-    let type = "ingredients";
     const searchString = e.target.value.toLowerCase();
 
     const filteredIngredients = uniqueIngredients.filter((ingredient) => {
@@ -86,11 +104,10 @@ function displayInputSearch() {
 
     console.log(filteredIngredients);
 
-    buildDropdown(recipes, type, ingredientsList, filteredIngredients);
+    buildDropdown(recipes, "ingredients", ingredientsList, filteredIngredients);
   });
 
   appareilSearch.addEventListener("keyup", (e) => {
-    let type = "appareils";
     const searchString = e.target.value.toLowerCase();
 
     const filteredAppareil = uniqueAppareil.filter((appliance) => {
@@ -98,26 +115,79 @@ function displayInputSearch() {
     });
 
     console.log(filteredAppareil);
-    buildDropdown(recipes, type, appareilsList, filteredAppareil);
+    buildDropdown(recipes, "appareils", appareilsList, filteredAppareil);
   });
 
   ustensileSearch.addEventListener("keyup", (e) => {
-    let type = "ustensiles";
     const searchString = e.target.value.toLowerCase();
 
     const filteredUstensiles = uniqueUstensils.filter((ustensils) => {
       return ustensils.includes(searchString);
     });
 
-    console.log(filteredUstensiles);
-    buildDropdown(recipes, type, ustensilesList, filteredUstensiles);
+    console.log(type);
+    buildDropdown(recipes, "ustensiles", ustensilesList, filteredUstensiles);
   });
 }
+
+// function createTag() {
+//   const allLi = document.querySelectorAll(".list");
+//   const tags = document.querySelector(".tags");
+
+//   allLi.forEach((li) => {
+//     li.addEventListener("click", () => {
+//       // const tag = document.createElement("li");
+//       console.log("test");
+//     });
+//   });
+// }
+
+// const createTags = (e) => {
+//   const tagsList = document.querySelector(".tags");
+//   const list = e.target;
+//   const newTag = document.createElement("li");
+//   const newTagDOM = `${list.innerText} <i id = "${list.innerText}" class="far fa-times-circle"></i>`;
+//   if (list.classList.contains("li-ingredients")) {
+//     newTag.classList.add("tag-ingredients");
+//   } else if (list.classList.contains("li-appliance")) {
+//     newTag.classList.add(`tag-appliance`);
+//   } else if (list.classList.contains("li-ustensils")) {
+//     newTag.classList.add(`tag-ustensils`);
+//   }
+
+//   newTag.innerHTML = newTagDOM;
+//   tagsList.appendChild(newTag);
+//   const newSearchTag = tagLi.innerText.split(" ");
+//   splitClean(newSearchTag);
+//   newSearchTag.forEach((newT) => {
+//     if (list.classList.contains("li-ingredients"))
+//       addNewTag(uniqueIngredients[0], newT);
+//     else if (list.classList.contains("li-appliance"))
+//       addNewTag(uniqueAppareil[0], newT);
+//     else if (list.classList.contains("li-ustensils"))
+//       addNewTag(uniqueUstensils[0], newT);
+//   });
+
+//   buildDropdown();
+// };
+
+// const addNewTag = (tagsArray, newTag) => {
+//   let tags = 0;
+//   console.log(tagsArray);
+//   tagsArray.forEach((currentTag) => {
+//     if (currentTag === newTag) tags++;
+//   });
+//   if (tags === 0) tagsArray.push(newTag);
+// };
 
 function init() {
   displayRecipes(recipes, recipesList);
   dropDownEventListeners();
   displayInputSearch();
+  // createTag();
+  // createTags();
+  // addNewTag();
+  // tagRecover();
 }
 
 init();

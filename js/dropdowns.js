@@ -5,6 +5,8 @@ const ingredientsList = document.querySelector(".dropdown-list-ingredients");
 const appareilsList = document.querySelector(".dropdown-list-appareil");
 const ustensilesList = document.querySelector(".dropdown-list-ustensiles");
 
+// donner des ids aux dropdowns et au clic, ouvrir celui qui correspond à l'id
+
 export const dropDownEventListeners = () => {
   document
     .querySelectorAll(".btn")
@@ -17,9 +19,9 @@ let list;
 
 const openDropdown = (e) => {
   const target = e.target;
-  oneDropdown(target);
+  // oneDropdown(target);
   dropdownSelection(target);
-  activeDropDown();
+  activateDropDown();
 };
 
 const oneDropdown = (target) => {
@@ -28,7 +30,8 @@ const oneDropdown = (target) => {
     activeDropdown &&
     !activeDropdown.classList.contains(`input-${target.classList[3]}`)
   )
-    activeDropDown();
+    console.log(activeDropdown);
+  activateDropDown();
 };
 
 const dropdownSelection = (target) => {
@@ -50,7 +53,7 @@ const dropdownSelection = (target) => {
   }
 };
 
-export const activeDropDown = () => {
+const activateDropDown = () => {
   if (dropdownForm.classList.contains("dropdown-form-active")) {
     dropdownForm.classList.remove("dropdown-form-active");
     list.classList.remove("dropdown-list-active");

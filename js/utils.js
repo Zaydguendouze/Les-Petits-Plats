@@ -68,18 +68,19 @@ export const buildDropdown = (recipes, type, list, filtredInput) => {
 
   switch (type) {
     case "ingredients":
-      if (filtredInput && filtredInput.length > 0 && type === "ingredients") {
+      if (filtredInput && filtredInput.length > 0) {
         ingredients = filtredInput;
       } else {
         ingredients = removeDuplicateIngredients(recipes);
-        console.log(list);
       }
 
       const ingredientListDOM = ingredients
         .slice(0, 30)
         .map((ingredient) => {
           return `
-        <li>${capitalizeFirstLetter(ingredient)}</li>
+        <li class="list" id="${capitalizeFirstLetter(
+          ingredient
+        )}" >${capitalizeFirstLetter(ingredient)}</li>
       `;
         })
         .join("");
@@ -87,17 +88,18 @@ export const buildDropdown = (recipes, type, list, filtredInput) => {
       break;
 
     case "appareils":
-      if (filtredInput && filtredInput.length > 0 && type === "appareils") {
+      if (filtredInput && filtredInput.length > 0) {
         appareils = filtredInput;
       } else {
         appareils = removeDuplicateAppareils(recipes);
-        console.log(list);
       }
 
       const appareilListDOM = appareils
         .map((appliance) => {
           return `
-        <li>${capitalizeFirstLetter(appliance)}</li>
+        <li class="list" id="${capitalizeFirstLetter(
+          appliance
+        )}">${capitalizeFirstLetter(appliance)}</li>
       `;
         })
         .join("");
@@ -105,23 +107,65 @@ export const buildDropdown = (recipes, type, list, filtredInput) => {
       break;
 
     case "ustensiles":
-      if (filtredInput && filtredInput.length > 0 && type === "ustensiles") {
+      if (filtredInput && filtredInput.length > 0) {
         ustensiles = filtredInput;
       } else {
         ustensiles = removeDuplicateUstensiles(recipes);
-        console.log(list);
       }
 
       const ustensilListDOM = ustensiles
         .slice(0, 30)
         .map((ustensils) => {
           return `
-        <li>${capitalizeFirstLetter(ustensils)}</li>
+        <li class="list" id="${capitalizeFirstLetter(
+          ustensils
+        )}">${capitalizeFirstLetter(ustensils)}</li>
       `;
         })
         .join("");
       list.innerHTML = ustensilListDOM;
       break;
   }
+
+  const allLi = document.querySelectorAll(".list");
+  const tags = document.querySelector(".tags");
+
+  allLi.forEach((li) => {
+    li.addEventListener("click", (e) => {
+      // avec l'event récupérer l'id
+      // filterDropdown
+      const tag = document.createElement("li");
+      tag.classList.add("tagClass", "tagCreated");
+      tag.id = li.id;
+      tag.textContent = li.textContent;
+      tag.innerHTML += '<i class="far fa-times-circle" id="cross"></i>';
+      if (type === "ingredients") {
+        tag.style.backgroundColor = "#3282f7";
+        // uniqueIngredients = uniqueIngredients.filter(
+        //   (i) => i === li.textContent
+        // );
+      } else if (type === "appareils") {
+        tag.style.backgroundColor = "#68d9a4";
+      } else if (type === "ustensiles") {
+        tag.style.backgroundColor = "#ed6454";
+      }
+      tags.appendChild(tag);
+    });
+  });
+
+  removeTag();
   return list;
 };
+
+export function removeTag() {
+  let tagClose = document.querySelectorAll("#cross");
+  let tagHtmlDOM = document.getElementsByClassName("tagCreated");
+
+  tagClose.forEach((tag) => {
+    // au clic de la croix sur un tag
+    tag.addEventListener("click", () => {
+      console.log("test");
+      tag.parentNode.remove();
+    });
+  });
+}
