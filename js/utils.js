@@ -2,7 +2,7 @@ import { removeDuplicateIngredients } from "./index.js";
 import { removeDuplicateAppareils } from "./index.js";
 import { removeDuplicateUstensiles } from "./index.js";
 import { createTags } from "./dropdowns.js";
-import { removeTags } from "./dropdowns.js";
+// import { removeTags } from "./dropdowns.js";
 
 export function filterRecipes(searchString, originalRecipes) {
   const filteredRecipes = originalRecipes.filter((recipe) => {
@@ -86,7 +86,7 @@ export const buildDropdown = (recipes, type, list, filtredInput) => {
         .join("");
       list.innerHTML = ingredientListDOM;
       list.addEventListener("click", createTags);
-      list.addEventListener("click", removeTags);
+      // list.addEventListener("click", removeTags);
       break;
 
     case "appareils":
@@ -105,7 +105,7 @@ export const buildDropdown = (recipes, type, list, filtredInput) => {
         .join("");
       list.innerHTML = appareilListDOM;
       list.addEventListener("click", createTags);
-      list.addEventListener("click", removeTags);
+      // list.addEventListener("click", removeTags);
       break;
 
     case "ustensiles":
@@ -125,7 +125,7 @@ export const buildDropdown = (recipes, type, list, filtredInput) => {
         .join("");
       list.innerHTML = ustensilListDOM;
       list.addEventListener("click", createTags);
-      list.addEventListener("click", removeTags);
+      // list.addEventListener("click", removeTags);
       break;
   }
 

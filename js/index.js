@@ -4,7 +4,7 @@ import { dropDownEventListeners } from "./dropdowns.js";
 
 /* Global variables --------------------------------- */
 let globalRecipesState = [];
-let uniqueIngredients = [];
+export let uniqueIngredients = [];
 let uniqueAppareil = [];
 let uniqueUstensils = [];
 /* Global variables -------------------------------- */
@@ -12,25 +12,28 @@ let uniqueUstensils = [];
 const searchBar = document.getElementById("search");
 const recipesList = document.querySelector("main");
 
-searchBar.addEventListener("keyup", (e) => {
-  const searchString = e.target.value.toLowerCase();
+export function search() {
+  searchBar.addEventListener("keyup", (e) => {
+    const searchString = e.target.value.toLowerCase();
 
-  if (searchString.length < 3) return displayRecipes(recipes, recipesList);
+    if (searchString.length < 3) return displayRecipes(recipes, recipesList);
 
-  const filteredRecipes = filterRecipes(searchString, recipes);
+    const filteredRecipes = filterRecipes(searchString, recipes);
 
-  globalRecipesState = filteredRecipes;
+    globalRecipesState = filteredRecipes;
+    console.log(filteredRecipes);
 
-  displayRecipes(filteredRecipes, recipesList);
+    displayRecipes(filteredRecipes, recipesList);
 
-  if (globalRecipesState.length === 0) {
-    const newArcticle = document.createElement("article");
-    const htmlString = `<p>Aucune recette ne correspond à votre critère… vous pouvez
+    if (globalRecipesState.length === 0) {
+      const newArcticle = document.createElement("article");
+      const htmlString = `<p>Aucune recette ne correspond à votre critère… vous pouvez
     chercher « tarte aux pommes », « poisson », etc.</p>`;
-    newArcticle.innerHTML = htmlString;
-    recipesList.appendChild(newArcticle);
-  }
-});
+      newArcticle.innerHTML = htmlString;
+      recipesList.appendChild(newArcticle);
+    }
+  });
+}
 
 const ingredientsList = document.querySelector(".dropdown-list-ingredients");
 const appareilsList = document.querySelector(".dropdown-list-appareil");
@@ -76,7 +79,7 @@ const appareilSearch = document.getElementById("search-appareil");
 const ustensileSearch = document.getElementById("search-ustensiles");
 const ingredientSearch = document.getElementById("search-ingredients");
 
-function displayInputSearch() {
+export function displayInputSearch() {
   ingredientSearch.addEventListener("keyup", (e) => {
     const searchString = e.target.value.toLowerCase();
 
@@ -108,7 +111,68 @@ function displayInputSearch() {
   });
 }
 
+export const filterByTags = () => {
+  let tags = document.getElementsByClassName("tagCreated");
+
+  let tagsArrayIngredients = [];
+  let tagsArrayAppareils = [];
+  let tagsArrayUstensiles = [];
+
+  for (let i = 0; i < tags.length; i++) {
+    if (tags[i].dataset.type === "ingredient") {
+      tagsArrayIngredients.push(tags[i].textContent.toLowerCase());
+    }
+    if (tags[i].dataset.type === "appareils") {
+      tagsArrayAppareils.push(tags[i].textContent.toLowerCase());
+    }
+    if (tags[i].dataset.type === "ustensiles") {
+      tagsArrayUstensiles.push(tags[i].textContent.toLowerCase());
+    }
+  }
+  let data = [];
+
+  if (globalRecipesState.length > 0) {
+    data = [...globalRecipesState];
+  } else {
+    data = [...recipes];
+  }
+
+  console.log("databeforefilter", data);
+  if (tagsArrayIngredients.length > 0) {
+    data = data.filter((recipe) => {
+      const tempRecipe = tagsArrayIngredients.every((ingredient) => {
+        return recipe.ingredients.some(
+          (element) =>
+            element.ingredient.toLowerCase() === ingredient.toLowerCase()
+        );
+      });
+      if (tempRecipe) return recipe;
+    });
+  }
+
+  if (tagsArrayAppareils.length > 0) {
+    data = data.filter((recipe) => {
+      const tempRecipe = tagsArrayAppareils.every((appareil) => {
+        return recipe.appliance.toLowerCase() === appareil.toLowerCase();
+      });
+      if (tempRecipe) return recipe;
+    });
+  }
+
+  // START ajouter le filtre pour les ustencils !
+
+  // END
+
+  console.log(data);
+  globalRecipesState = data;
+  console.log(tagsArrayAppareils, tagsArrayIngredients, tagsArrayUstensiles);
+  // console.log("data", data);
+  console.log("globalRecipesState", globalRecipesState);
+  displayRecipes(globalRecipesState, recipesList);
+};
+
 function init() {
+  search();
   displayRecipes(recipes, recipesList);
   dropDownEventListeners();
   displayInputSearch();

@@ -1,5 +1,11 @@
 import { recipes } from "../data/recipes.js";
-import { buildDropdown } from "./utils.js";
+import {
+  displayInputSearch,
+  removeDuplicateIngredients,
+  uniqueIngredients,
+  filterByTags,
+} from "./index.js";
+import { buildDropdown, displayRecipes, filterRecipes } from "./utils.js";
 
 const ingredientsList = document.querySelector(".dropdown-list-ingredients");
 const appareilsList = document.querySelector(".dropdown-list-appareil");
@@ -71,20 +77,27 @@ const activateDropDown = () => {
 export const createTags = (e) => {
   const tags = document.querySelector(".tags");
   const tagList = e.target;
-  console.log("target", e.target);
+  // console.log("target", e.target);
   const tag = document.createElement("li");
   const newHtml = `${tagList.innerText}<i id = "${tagList.innerText}" class="far fa-times-circle cross"></i>`;
-  console.log("newHtml", newHtml);
+  // console.log("newHtml", newHtml);
   if (tagList.classList.contains("li-ingredients")) {
-    tag.classList.add(`tag-ingredient`);
+    tag.classList.add(`tag-ingredient`, "tagCreated");
+    tag.setAttribute("data-type", "ingredient");
   } else if (tagList.classList.contains("li-appareils")) {
-    tag.classList.add(`tag-appliance`);
+    tag.classList.add(`tag-appliance`, "tagCreated");
+    tag.setAttribute("data-type", "appareils");
   } else if (tagList.classList.contains("li-ustensiles")) {
-    tag.classList.add(`tag-ustensils`);
+    tag.classList.add(`tag-ustensils`, "tagCreated");
+    tag.setAttribute("data-type", "ustensiles");
   }
   tag.innerHTML = newHtml;
   tags.appendChild(tag);
+  removeTags();
+  filterByTags();
 };
+
+// const addNewTag = ()
 
 export const removeTags = () => {
   let tagCross = document.querySelectorAll(".cross");
@@ -94,4 +107,69 @@ export const removeTags = () => {
     tag.addEventListener("click", () => tag.parentNode.remove())
   );
   console.log("test", tags);
+  filterByTags();
 };
+
+// const filterByTags = () => {
+//   let tags = document.getElementsByClassName("tagCreated");
+//   const inputSearch = document.getElementById("search");
+//   // console.log(inputSearch);
+
+//   let tagsArray = [];
+//   // tagsArray.push(inputSearch.value);
+
+//   for (let i = 0; i < tags.length; i++) {
+//     if (tags[i].dataset.type === "ingredient") {
+//       tagsArray.push(tags[i].textContent);
+//       displayInputSearch(tags[i].textContent.toLowerCase());
+//     }
+//   }
+//   console.log("tagsArray", tagsArray);
+//   console.log("inputSearch.value", inputSearch.value);
+
+//   const originalRecipes = recipes.filter((recipe) => {
+//     if (
+//       recipe.name.toLowerCase().includes(inputSearch.value) ||
+//       recipe.description.toLowerCase().includes(inputSearch.value) ||
+//       recipe.ingredients.filter((ingredient) =>
+//         ingredient.ingredient.toLowerCase().includes(inputSearch.value)
+//       )
+//     )
+//       return recipe;
+//     displayRecipes(originalRecipes, recipesList);
+//   });
+//   console.log(originalRecipes);
+//   displayRecipes(originalRecipes, recipesList);
+// };
+
+// const filterByTags = () => {
+//   let tags = document.getElementsByClassName("tagCreated");
+//   const inputSearch = document.getElementById("search");
+
+//   let tagsArray = [];
+//   tagsArray.push(inputSearch.value);
+
+//   for (let i = 0; i < tags.length; i++) {
+//     if (tags[i].dataset.type === "ingredient") {
+//       tagsArray.push(tags[i].textContent);
+//       displayInputSearch(tags[i].textContent.toLowerCase());
+//     }
+//   }
+//   console.log(tagsArray);
+
+//   const state = globalRecipesState.filter((element) => {
+//     console.log(globalRecipesState);
+//     if (
+//       element.name.toLowerCase().includes(inputSearch.value) ||
+//       element.description.toLowerCase().includes(inputSearch.value) ||
+//       element.ingredients.filter(
+//         (ingredient) =>
+//           ingredient.ingredient.toLowerCase().includes(inputSearch.value)
+//             .length >= 1
+//       )
+//     )
+//       return element;
+//   });
+//   // console.log(element);
+//   displayRecipes(state, tagsArray);
+// };
