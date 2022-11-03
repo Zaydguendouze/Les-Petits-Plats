@@ -99,15 +99,15 @@ export const createTags = (e) => {
 
 // const addNewTag = ()
 
-export const removeTags = () => {
+const removeTags = () => {
   let tagCross = document.querySelectorAll(".cross");
   let tags = document.querySelectorAll(".tag");
+  const recipesList = document.querySelector("main");
 
   tagCross.forEach((tag) =>
     tag.addEventListener("click", () => tag.parentNode.remove())
   );
-  console.log("test", tags);
-  filterByTags();
+  console.log("tags", tags);
 };
 
 // const filterByTags = () => {

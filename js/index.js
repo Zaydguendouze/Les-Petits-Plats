@@ -118,6 +118,7 @@ export const filterByTags = () => {
   let tagsArrayAppareils = [];
   let tagsArrayUstensiles = [];
 
+  let tagCross = document.querySelectorAll(".cross");
   for (let i = 0; i < tags.length; i++) {
     if (tags[i].dataset.type === "ingredient") {
       tagsArrayIngredients.push(tags[i].textContent.toLowerCase());
@@ -154,6 +155,17 @@ export const filterByTags = () => {
     data = data.filter((recipe) => {
       const tempRecipe = tagsArrayAppareils.every((appareil) => {
         return recipe.appliance.toLowerCase() === appareil.toLowerCase();
+      });
+      if (tempRecipe) return recipe;
+    });
+  }
+
+  if (tagsArrayUstensiles.length > 0) {
+    data = data.filter((recipe) => {
+      const tempRecipe = tagsArrayUstensiles.every((ustensile) => {
+        return recipe.ustensils.some(
+          (element) => element.toLowerCase() === ustensile.toLowerCase()
+        );
       });
       if (tempRecipe) return recipe;
     });
