@@ -2,8 +2,10 @@ import { recipes } from "../data/recipes.js";
 import {
   displayInputSearch,
   removeDuplicateIngredients,
-  uniqueIngredients,
   filterByTags,
+  globalRecipesState,
+  filterDropIngredients,
+  tagsArrayIngredients,
 } from "./index.js";
 import { buildDropdown, displayRecipes, filterRecipes } from "./utils.js";
 
@@ -93,83 +95,90 @@ export const createTags = (e) => {
   }
   tag.innerHTML = newHtml;
   tags.appendChild(tag);
-  removeTags();
+  // let tagCross = document.querySelectorAll(".cross");
+  // tagCross.forEach((tag) => tag.addEventListener("click", removeTags));
   filterByTags();
+  removeTags();
 };
 
-// const addNewTag = ()
-
-const removeTags = () => {
+export function removeTags() {
   let tagCross = document.querySelectorAll(".cross");
-  let tags = document.querySelectorAll(".tag");
+  let tags = document.getElementsByClassName("tagCreated");
   const recipesList = document.querySelector("main");
 
+  let tagRemove = [];
+
+  let data = [];
+
+  // Stocker les datas après une recherche effectuée ou un tag, ou utiliser les recettes originales
+  if (globalRecipesState.length > 0) {
+    data = [...globalRecipesState];
+  } else {
+    data = [...recipes];
+  }
+
+  console.log("databeforefilter in remove", data);
+
   tagCross.forEach((tag) =>
-    tag.addEventListener("click", () => tag.parentNode.remove())
+    tag.addEventListener("click", () => {
+      tag.parentNode.remove();
+      tag.classList.remove("tagCreated");
+
+      for (let i = 0; i < tags.length; i++) {
+        if (tags[i].dataset.type === "ingredient") {
+          tagsArrayIngredients.push(tags[i].textContent.toLowerCase());
+        }
+        if (tags[i].dataset.type === "appareils") {
+          tagsArrayAppareils.push(tags[i].textContent.toLowerCase());
+        }
+        if (tags[i].dataset.type === "ustensiles") {
+          tagsArrayUstensiles.push(tags[i].textContent.toLowerCase());
+        }
+      }
+
+      if (tagsArrayIngredients.length > 0) {
+        const filtredRecipes = [];
+
+        for (let i = 0; i < data.length; i++) {
+          const recipe = data[i]; // tu auras l'objet à l'itération i
+          let includeRecipe = false;
+          for (let j = 0; j < tagsArrayIngredients.length; j++) {
+            for (let k = 0; k < recipe.ingredients.length; k++) {
+              if (
+                recipe.ingredients[k].ingredient.toLowerCase() ===
+                tagsArrayIngredients[j].toLowerCase()
+              ) {
+                includeRecipe = true;
+                break;
+              } else includeRecipe = false;
+            }
+
+            console.log(filtredRecipes);
+
+            if (
+              j === tagsArrayIngredients.length - 1 &&
+              includeRecipe === true
+            ) {
+              filtredRecipes.push(recipe);
+            }
+          }
+        }
+        if (filtredRecipes.length > 0) {
+          console.log("filtredRecipes", filtredRecipes);
+          data = filtredRecipes;
+        }
+        buildDropdown(
+          data,
+          "ingredients",
+          ingredientsList,
+          filterDropIngredients
+        );
+      }
+
+      console.log("tagsArrayIngredients", tagsArrayIngredients);
+
+      console.log("tagRemove", tagRemove);
+      console.log("globalRecipesState to remove", globalRecipesState);
+    })
   );
-  console.log("tags", tags);
-};
-
-// const filterByTags = () => {
-//   let tags = document.getElementsByClassName("tagCreated");
-//   const inputSearch = document.getElementById("search");
-//   // console.log(inputSearch);
-
-//   let tagsArray = [];
-//   // tagsArray.push(inputSearch.value);
-
-//   for (let i = 0; i < tags.length; i++) {
-//     if (tags[i].dataset.type === "ingredient") {
-//       tagsArray.push(tags[i].textContent);
-//       displayInputSearch(tags[i].textContent.toLowerCase());
-//     }
-//   }
-//   console.log("tagsArray", tagsArray);
-//   console.log("inputSearch.value", inputSearch.value);
-
-//   const originalRecipes = recipes.filter((recipe) => {
-//     if (
-//       recipe.name.toLowerCase().includes(inputSearch.value) ||
-//       recipe.description.toLowerCase().includes(inputSearch.value) ||
-//       recipe.ingredients.filter((ingredient) =>
-//         ingredient.ingredient.toLowerCase().includes(inputSearch.value)
-//       )
-//     )
-//       return recipe;
-//     displayRecipes(originalRecipes, recipesList);
-//   });
-//   console.log(originalRecipes);
-//   displayRecipes(originalRecipes, recipesList);
-// };
-
-// const filterByTags = () => {
-//   let tags = document.getElementsByClassName("tagCreated");
-//   const inputSearch = document.getElementById("search");
-
-//   let tagsArray = [];
-//   tagsArray.push(inputSearch.value);
-
-//   for (let i = 0; i < tags.length; i++) {
-//     if (tags[i].dataset.type === "ingredient") {
-//       tagsArray.push(tags[i].textContent);
-//       displayInputSearch(tags[i].textContent.toLowerCase());
-//     }
-//   }
-//   console.log(tagsArray);
-
-//   const state = globalRecipesState.filter((element) => {
-//     console.log(globalRecipesState);
-//     if (
-//       element.name.toLowerCase().includes(inputSearch.value) ||
-//       element.description.toLowerCase().includes(inputSearch.value) ||
-//       element.ingredients.filter(
-//         (ingredient) =>
-//           ingredient.ingredient.toLowerCase().includes(inputSearch.value)
-//             .length >= 1
-//       )
-//     )
-//       return element;
-//   });
-//   // console.log(element);
-//   displayRecipes(state, tagsArray);
-// };
+}
