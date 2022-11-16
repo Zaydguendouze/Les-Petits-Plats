@@ -1,9 +1,9 @@
 import { recipes } from "../data/recipes.js";
 import { filterRecipes, displayRecipes, buildDropdown } from "./utils.js";
-import { dropDownEventListeners, removeTags } from "./dropdowns.js";
+import { dropDownEventListeners, removeTag } from "./dropdowns.js";
 
 /* Global variables --------------------------------- */
-export let globalRecipesState = [];
+let globalRecipesState = [];
 let uniqueIngredients = [];
 let uniqueAppareil = [];
 let uniqueUstensils = [];
@@ -121,16 +121,18 @@ export function displayInputSearch() {
   });
 }
 
-export let tagsArrayIngredients = [];
-let tagsArrayAppareils = [];
-let tagsArrayUstensiles = [];
+// strategy : filterAfterTagRemoved
+export const filterByTags = (strategy) => {
+  if (strategy === "filterAfterTagRemoved") {
+    globalRecipesState = [];
+    console.log("globalRecipesState empty", globalRecipesState);
+  }
 
-export const filterByTags = () => {
   let tags = document.getElementsByClassName("tagCreated");
 
-  // let tagsArrayIngredients = [];
-  // let tagsArrayAppareils = [];
-  // let tagsArrayUstensiles = [];
+  let tagsArrayIngredients = [];
+  let tagsArrayAppareils = [];
+  let tagsArrayUstensiles = [];
 
   for (let i = 0; i < tags.length; i++) {
     if (tags[i].dataset.type === "ingredient") {
@@ -196,6 +198,8 @@ export const filterByTags = () => {
       data = filtredRecipes;
     }
     buildDropdown(data, "ingredients", ingredientsList, filterDropIngredients);
+  } else {
+    buildDropdown(data, "ingredients", ingredientsList, globalRecipesState);
   }
   // END build filter without using array functions: map, filter.........
   // -------------------------------------------------------------------------
@@ -209,7 +213,6 @@ export const filterByTags = () => {
   //   });
   //   buildDropdown(data, "appareils", appareilsList, filterDropAppareils);
   // }
-
   if (tagsArrayAppareils.length > 0) {
     const filtredRecipes = [];
 
@@ -238,6 +241,8 @@ export const filterByTags = () => {
       data = filtredRecipes;
     }
     buildDropdown(data, "appareils", appareilsList, filterDropAppareils);
+  } else {
+    buildDropdown(data, "appareils", appareilsList, globalRecipesState);
   }
 
   // if (tagsArrayUstensiles.length > 0) {
@@ -280,10 +285,30 @@ export const filterByTags = () => {
       data = filtredRecipes;
     }
     buildDropdown(data, "ustensiles", ustensilesList, filterDropUstensiles);
+  } else {
+    buildDropdown(data, "ustensiles", ustensilesList, globalRecipesState);
   }
+
+  console.log("tagsArrayIngredients in filterbytags", tagsArrayIngredients);
 
   globalRecipesState = data;
   displayRecipes(globalRecipesState, recipesList);
+
+  // if (e.target.id !== "") {
+  //   data = [...globalRecipesState];
+  //   console.log("e.target.id", e.target.id);
+  //   const liTag = e.target;
+  //   console.log("e.target", e.target);
+  //   const tag = e.target.parentNode;
+  //   console.log("e.target.parentNode", e.target.parentNode);
+  //   let arrayTags;
+  //   if (tag.classList.contains("tag-ingredient"))
+  //     arrayTags = tagsArrayIngredients[0];
+  //   console.log("tagsArrayIngredients to remove", tagsArrayIngredients);
+  //   tag.remove();
+  //   console.log("arrayTags", arrayTags);
+  //   buildDropdown(data, "ingredients", ingredientsList, filterDropIngredients);
+  // }
 };
 
 function init() {

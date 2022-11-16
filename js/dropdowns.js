@@ -3,9 +3,7 @@ import {
   displayInputSearch,
   removeDuplicateIngredients,
   filterByTags,
-  globalRecipesState,
   filterDropIngredients,
-  tagsArrayIngredients,
 } from "./index.js";
 import { buildDropdown, displayRecipes, filterRecipes } from "./utils.js";
 
@@ -76,7 +74,7 @@ const activateDropDown = () => {
   buildDropdown(recipes, "ustensiles", ustensilesList);
 };
 
-export const createTags = (e) => {
+export const createTag = (e) => {
   const tags = document.querySelector(".tags");
   const tagList = e.target;
   // console.log("target", e.target);
@@ -95,90 +93,12 @@ export const createTags = (e) => {
   }
   tag.innerHTML = newHtml;
   tags.appendChild(tag);
-  // let tagCross = document.querySelectorAll(".cross");
-  // tagCross.forEach((tag) => tag.addEventListener("click", removeTags));
+  tag.addEventListener("click", removeTag);
   filterByTags();
-  removeTags();
 };
 
-export function removeTags() {
-  let tagCross = document.querySelectorAll(".cross");
-  let tags = document.getElementsByClassName("tagCreated");
-  const recipesList = document.querySelector("main");
-
-  let tagRemove = [];
-
-  let data = [];
-
-  // Stocker les datas après une recherche effectuée ou un tag, ou utiliser les recettes originales
-  if (globalRecipesState.length > 0) {
-    data = [...globalRecipesState];
-  } else {
-    data = [...recipes];
-  }
-
-  console.log("databeforefilter in remove", data);
-
-  tagCross.forEach((tag) =>
-    tag.addEventListener("click", () => {
-      tag.parentNode.remove();
-      tag.classList.remove("tagCreated");
-
-      for (let i = 0; i < tags.length; i++) {
-        if (tags[i].dataset.type === "ingredient") {
-          tagsArrayIngredients.push(tags[i].textContent.toLowerCase());
-        }
-        if (tags[i].dataset.type === "appareils") {
-          tagsArrayAppareils.push(tags[i].textContent.toLowerCase());
-        }
-        if (tags[i].dataset.type === "ustensiles") {
-          tagsArrayUstensiles.push(tags[i].textContent.toLowerCase());
-        }
-      }
-
-      if (tagsArrayIngredients.length > 0) {
-        const filtredRecipes = [];
-
-        for (let i = 0; i < data.length; i++) {
-          const recipe = data[i]; // tu auras l'objet à l'itération i
-          let includeRecipe = false;
-          for (let j = 0; j < tagsArrayIngredients.length; j++) {
-            for (let k = 0; k < recipe.ingredients.length; k++) {
-              if (
-                recipe.ingredients[k].ingredient.toLowerCase() ===
-                tagsArrayIngredients[j].toLowerCase()
-              ) {
-                includeRecipe = true;
-                break;
-              } else includeRecipe = false;
-            }
-
-            console.log(filtredRecipes);
-
-            if (
-              j === tagsArrayIngredients.length - 1 &&
-              includeRecipe === true
-            ) {
-              filtredRecipes.push(recipe);
-            }
-          }
-        }
-        if (filtredRecipes.length > 0) {
-          console.log("filtredRecipes", filtredRecipes);
-          data = filtredRecipes;
-        }
-        buildDropdown(
-          data,
-          "ingredients",
-          ingredientsList,
-          filterDropIngredients
-        );
-      }
-
-      console.log("tagsArrayIngredients", tagsArrayIngredients);
-
-      console.log("tagRemove", tagRemove);
-      console.log("globalRecipesState to remove", globalRecipesState);
-    })
-  );
-}
+export const removeTag = (e) => {
+  const tag = e.target.parentNode;
+  tag.remove();
+  filterByTags("filterAfterTagRemoved");
+};
