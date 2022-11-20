@@ -167,6 +167,8 @@ export const filterByTags = (strategy) => {
   //     if (tempRecipe) return recipe;
   //   });
   //   buildDropdown(data, "ingredients", ingredientsList, filterDropIngredients);
+  // } else {
+  //   buildDropdown(data, "ingredients", ingredientsList, globalRecipesState);
   // }
 
   // -------------------------------------------------------------------------
@@ -212,6 +214,8 @@ export const filterByTags = (strategy) => {
   //     if (tempRecipe) return recipe;
   //   });
   //   buildDropdown(data, "appareils", appareilsList, filterDropAppareils);
+  // } else {
+  //   buildDropdown(data, "appareils", appareilsList, globalRecipesState);
   // }
   if (tagsArrayAppareils.length > 0) {
     const filtredRecipes = [];
@@ -255,6 +259,8 @@ export const filterByTags = (strategy) => {
   //     if (tempRecipe) return recipe;
   //   });
   //   buildDropdown(data, "ustensiles", ustensilesList, filterDropUstensiles);
+  // } else {
+  //   buildDropdown(data, "ustensiles", ustensilesList, globalRecipesState);
   // }
 
   if (tagsArrayUstensiles.length > 0) {
@@ -292,6 +298,7 @@ export const filterByTags = (strategy) => {
   console.log("tagsArrayIngredients in filterbytags", tagsArrayIngredients);
 
   globalRecipesState = data;
+  console.log("globalRecipesState", globalRecipesState);
   displayRecipes(globalRecipesState, recipesList);
 
   // if (e.target.id !== "") {

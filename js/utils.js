@@ -19,9 +19,10 @@ export function filterRecipes(searchString, originalRecipes) {
   return filteredRecipes;
 }
 
-function capitalizeFirstLetter(string) {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-}
+const capitalizeFirstLetter = (s) => {
+  if (typeof s !== "string") return "";
+  return s.charAt(0).toUpperCase() + s.slice(1);
+};
 
 export const displayRecipes = (recipes, recipesList) => {
   const htmlString = recipes
