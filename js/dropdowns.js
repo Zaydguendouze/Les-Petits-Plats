@@ -3,7 +3,6 @@ import {
   displayInputSearch,
   removeDuplicateIngredients,
   filterByTags,
-  filterDropIngredients,
 } from "./index.js";
 import { buildDropdown, displayRecipes, filterRecipes } from "./utils.js";
 

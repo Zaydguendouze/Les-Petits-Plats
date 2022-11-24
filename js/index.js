@@ -1,5 +1,10 @@
 import { recipes } from "../data/recipes.js";
-import { filterRecipes, displayRecipes, buildDropdown } from "./utils.js";
+import {
+  // filterRecipes,
+  displayRecipes,
+  buildDropdown,
+  filterRecipes,
+} from "./utils.js";
 import { dropDownEventListeners, removeTag } from "./dropdowns.js";
 
 /* Global variables --------------------------------- */
@@ -47,6 +52,14 @@ export function removeDuplicateIngredients(recipes) {
     )
   );
 
+  // Ici faire la boucle avec le forEach
+  // for (let i = 0; i < recipes.length; i++) {
+  //   const recipe = recipes[i];
+  //   for (let j = 0; j < recipe.ingredients.lenght; j++) {
+  //     console.log(recipe.ingredients);
+  //   }
+  // }
+
   uniqueIngredients = [...ingredientsNames];
   return [...ingredientsNames];
 }
@@ -79,7 +92,7 @@ const appareilSearch = document.getElementById("search-appareil");
 const ustensileSearch = document.getElementById("search-ustensiles");
 const ingredientSearch = document.getElementById("search-ingredients");
 
-export let filterDropIngredients;
+let filterDropIngredients;
 let filterDropAppareils;
 let filterDropUstensiles;
 
@@ -90,6 +103,15 @@ export function displayInputSearch() {
     const filteredIngredients = uniqueIngredients.filter((ingredient) => {
       return ingredient.includes(searchString);
     });
+
+    // Bon ici avec une value comment faire la boucle ??
+    // let filteredIngredients = [];
+    // for (let i = 0; i < uniqueIngredients.length; i++) {
+    //   if (searchString === uniqueIngredients[i].toLowerCase()) {
+    //     return uniqueIngredients[i].toLowerCase().includes(searchString);
+    //   }
+    //   console.log("searchString", searchString);
+    // }
 
     filteredIngredients = filterDropIngredients;
 
@@ -189,6 +211,7 @@ export const filterByTags = (strategy) => {
             break;
           } else includeRecipe = false;
         }
+        if (!includeRecipe) break;
 
         if (j === tagsArrayIngredients.length - 1 && includeRecipe === true) {
           filtredRecipes.push(recipe);

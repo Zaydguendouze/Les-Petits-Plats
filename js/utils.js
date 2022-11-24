@@ -19,6 +19,30 @@ export function filterRecipes(searchString, originalRecipes) {
   return filteredRecipes;
 }
 
+// Ici boucler avec des paramètres
+// export function filterRecipesSearch(searchString, originalRecipes) {
+//   for (let i = 0; i < originalRecipes.length; i++) {
+//     const filteredRecipes = originalRecipes[i];
+//     console.log("originalRecipes[i]", originalRecipes[i]);
+//     const isSearchInIngredients = originalRecipes[i].ingredients;
+//     console.log(
+//       "originalRecipes[i].ingredients",
+//       originalRecipes[i].ingredients
+//     );
+//     for (let j = 0; j < isSearchInIngredients; j++) {
+//       if (
+//         isSearchInIngredients[j].ingredient.toLowerCase().includes(searchString)
+//       )
+//         return (
+//           originalRecipes.name.toLowerCase().includes(searchString) ||
+//           originalRecipes.description.toLowerCase().includes(searchString) ||
+//           isSearchInIngredients.length > 0
+//         );
+//     }
+//     return filteredRecipes;
+//   }
+// }
+
 const capitalizeFirstLetter = (s) => {
   if (typeof s !== "string") return "";
   return s.charAt(0).toUpperCase() + s.slice(1);
