@@ -8,7 +8,7 @@ import {
 import { dropDownEventListeners, removeTag } from "./dropdowns.js";
 
 /* Global variables --------------------------------- */
-let globalRecipesState = [];
+export let globalRecipesState = [];
 let uniqueIngredients = [];
 let uniqueAppareil = [];
 let uniqueUstensils = [];
@@ -92,9 +92,9 @@ const appareilSearch = document.getElementById("search-appareil");
 const ustensileSearch = document.getElementById("search-ustensiles");
 const ingredientSearch = document.getElementById("search-ingredients");
 
-let filterDropIngredients;
-let filterDropAppareils;
-let filterDropUstensiles;
+// let filterDropIngredients;
+// let filterDropAppareils;
+// let filterDropUstensiles;
 
 export function displayInputSearch() {
   ingredientSearch.addEventListener("keyup", (e) => {
@@ -113,7 +113,7 @@ export function displayInputSearch() {
     //   console.log("searchString", searchString);
     // }
 
-    filteredIngredients = filterDropIngredients;
+    // filteredIngredients = filterDropIngredients;
 
     buildDropdown(recipes, "ingredients", ingredientsList, filteredIngredients);
   });
@@ -125,7 +125,7 @@ export function displayInputSearch() {
       return appliance.includes(searchString);
     });
 
-    filteredAppareil = filterDropAppareils;
+    // filteredAppareil = filterDropAppareils;
 
     buildDropdown(recipes, "appareils", appareilsList, filteredAppareil);
   });
@@ -137,7 +137,7 @@ export function displayInputSearch() {
       return ustensils.includes(searchString);
     });
 
-    filteredUstensiles = filterDropUstensiles;
+    // filteredUstensiles = filterDropUstensiles;
 
     buildDropdown(recipes, "ustensiles", ustensilesList, filteredUstensiles);
   });
@@ -188,9 +188,9 @@ export const filterByTags = (strategy) => {
   //     });
   //     if (tempRecipe) return recipe;
   //   });
-  //   buildDropdown(data, "ingredients", ingredientsList, filterDropIngredients);
+  //   buildDropdown(data, "ingredients", ingredientsList);
   // } else {
-  //   buildDropdown(data, "ingredients", ingredientsList, globalRecipesState);
+  //   buildDropdown(data, "ingredients", ingredientsList);
   // }
 
   // -------------------------------------------------------------------------
@@ -221,10 +221,20 @@ export const filterByTags = (strategy) => {
     if (filtredRecipes.length > 0) {
       console.log("filtredRecipes", filtredRecipes);
       data = filtredRecipes;
+      buildDropdown(data, "ingredients", ingredientsList);
+      buildDropdown(data, "appareils", appareilsList);
+      buildDropdown(data, "ustensiles", ustensilesList);
+      // console.log("filtredRecipes BUILD", filtredRecipes);
     }
-    buildDropdown(data, "ingredients", ingredientsList, filterDropIngredients);
+    // buildDropdown(data, "ingredients", ingredientsList);
+    // else {
+    //   buildDropdown(data, "ingredients", ingredientsList, globalRecipesState);
+    //   console.log("filtredRecipes BUILD");
+    // }
   } else {
-    buildDropdown(data, "ingredients", ingredientsList, globalRecipesState);
+    buildDropdown(data, "ingredients", ingredientsList);
+    buildDropdown(data, "appareils", appareilsList);
+    buildDropdown(data, "ustensiles", ustensilesList);
   }
   // END build filter without using array functions: map, filter.........
   // -------------------------------------------------------------------------
@@ -257,6 +267,7 @@ export const filterByTags = (strategy) => {
             break;
           } else includeRecipe = false;
         }
+        if (!includeRecipe) break;
 
         if (j === tagsArrayAppareils.length - 1 && includeRecipe === true) {
           filtredRecipes.push(recipe);
@@ -266,10 +277,14 @@ export const filterByTags = (strategy) => {
     if (filtredRecipes.length > 0) {
       console.log("filtredRecipes", filtredRecipes);
       data = filtredRecipes;
+      buildDropdown(data, "ingredients", ingredientsList);
+      buildDropdown(data, "appareils", appareilsList);
+      buildDropdown(data, "ustensiles", ustensilesList);
     }
-    buildDropdown(data, "appareils", appareilsList, filterDropAppareils);
   } else {
-    buildDropdown(data, "appareils", appareilsList, globalRecipesState);
+    buildDropdown(data, "ingredients", ingredientsList);
+    buildDropdown(data, "appareils", appareilsList);
+    buildDropdown(data, "ustensiles", ustensilesList);
   }
 
   // if (tagsArrayUstensiles.length > 0) {
@@ -303,6 +318,7 @@ export const filterByTags = (strategy) => {
             break;
           } else includeRecipe = false;
         }
+        if (!includeRecipe) break;
 
         if (j === tagsArrayUstensiles.length - 1 && includeRecipe === true) {
           filtredRecipes.push(recipe);
@@ -312,10 +328,14 @@ export const filterByTags = (strategy) => {
     if (filtredRecipes.length > 0) {
       console.log("filtredRecipes", filtredRecipes);
       data = filtredRecipes;
+      buildDropdown(data, "ingredients", ingredientsList);
+      buildDropdown(data, "appareils", appareilsList);
+      buildDropdown(data, "ustensiles", ustensilesList);
     }
-    buildDropdown(data, "ustensiles", ustensilesList, filterDropUstensiles);
   } else {
-    buildDropdown(data, "ustensiles", ustensilesList, globalRecipesState);
+    buildDropdown(data, "ingredients", ingredientsList);
+    buildDropdown(data, "appareils", appareilsList);
+    buildDropdown(data, "ustensiles", ustensilesList);
   }
 
   console.log("tagsArrayIngredients in filterbytags", tagsArrayIngredients);

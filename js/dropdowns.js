@@ -3,6 +3,7 @@ import {
   displayInputSearch,
   removeDuplicateIngredients,
   filterByTags,
+  globalRecipesState,
 } from "./index.js";
 import { buildDropdown, displayRecipes, filterRecipes } from "./utils.js";
 
@@ -68,9 +69,20 @@ const activateDropDown = () => {
     icon.style.color = "white";
     icon.style.transform = "rotate(180deg)";
   }
-  buildDropdown(recipes, "ingredients", ingredientsList);
-  buildDropdown(recipes, "appareils", appareilsList);
-  buildDropdown(recipes, "ustensiles", ustensilesList);
+  let data = [];
+
+  if (globalRecipesState.length > 0) {
+    data = [...globalRecipesState];
+  } else {
+    data = [...recipes];
+  }
+
+  console.log("databeforeBUILD", data);
+
+  buildDropdown(data, "ingredients", ingredientsList);
+  console.log("dataafterBUILD", data);
+  buildDropdown(data, "appareils", appareilsList);
+  buildDropdown(data, "ustensiles", ustensilesList);
 };
 
 export const createTag = (e) => {
