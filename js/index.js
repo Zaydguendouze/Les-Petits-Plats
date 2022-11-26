@@ -1,9 +1,10 @@
 import { recipes } from "../data/recipes.js";
 import {
-  // filterRecipes,
+  filterRecipesSearch,
   displayRecipes,
   buildDropdown,
   filterRecipes,
+  // filterRecipes,
 } from "./utils.js";
 import { dropDownEventListeners, removeTag } from "./dropdowns.js";
 
@@ -46,19 +47,21 @@ const ustensilesList = document.querySelector(".dropdown-list-ustensiles");
 
 export function removeDuplicateIngredients(recipes) {
   const ingredientsNames = new Set();
-  recipes.forEach((recipe) =>
-    recipe.ingredients.forEach((element) =>
-      ingredientsNames.add(element.ingredient.toLowerCase())
-    )
-  );
+  // recipes.forEach((recipe) =>
+  //   recipe.ingredients.forEach((element) =>
+  //     ingredientsNames.add(element.ingredient.toLowerCase())
+  //   )
+  // );
 
   // Ici faire la boucle avec le forEach
-  // for (let i = 0; i < recipes.length; i++) {
-  //   const recipe = recipes[i];
-  //   for (let j = 0; j < recipe.ingredients.lenght; j++) {
-  //     console.log(recipe.ingredients);
-  //   }
-  // }
+  for (let i = 0; i < recipes.length; i++) {
+    console.log("test");
+    const recipe = recipes[i];
+    for (let j = 0; j < recipe.ingredients.length; j++) {
+      ingredientsNames.add(recipe.ingredients[j].ingredient);
+      console.log(recipe.ingredients[j].ingredient);
+    }
+  }
 
   uniqueIngredients = [...ingredientsNames];
   return [...ingredientsNames];
@@ -67,9 +70,17 @@ export function removeDuplicateIngredients(recipes) {
 export function removeDuplicateAppareils(recipes) {
   const appareilsNames = new Set();
 
-  recipes.forEach((recipe) =>
-    appareilsNames.add(recipe.appliance.toLowerCase())
-  );
+  // recipes.forEach((recipe) =>
+  //   appareilsNames.add(recipe.appliance.toLowerCase())
+  // );
+
+  for (let i = 0; i < recipes.length; i++) {
+    console.log("test");
+    const recipe = recipes[i];
+    for (let j = 0; j < recipe.appliance.length; j++) {
+      appareilsNames.add(recipe.appliance);
+    }
+  }
 
   uniqueAppareil = [...appareilsNames];
   return [...appareilsNames];
@@ -78,11 +89,19 @@ export function removeDuplicateAppareils(recipes) {
 export function removeDuplicateUstensiles(recipes) {
   const ustensilesNames = new Set();
 
-  recipes.forEach((recipe) =>
-    recipe.ustensils.forEach((ustensil) =>
-      ustensilesNames.add(ustensil.toLowerCase())
-    )
-  );
+  // recipes.forEach((recipe) =>
+  //   recipe.ustensils.forEach((ustensil) =>
+  //     ustensilesNames.add(ustensil.toLowerCase())
+  //   )
+  // );
+
+  for (let i = 0; i < recipes.length; i++) {
+    console.log("test");
+    const recipe = recipes[i];
+    for (let j = 0; j < recipe.ustensils.length; j++) {
+      ustensilesNames.add(recipe.ustensils[j]);
+    }
+  }
 
   uniqueUstensils = [...ustensilesNames];
   return [...ustensilesNames];
@@ -100,18 +119,20 @@ export function displayInputSearch() {
   ingredientSearch.addEventListener("keyup", (e) => {
     const searchString = e.target.value.toLowerCase();
 
-    const filteredIngredients = uniqueIngredients.filter((ingredient) => {
-      return ingredient.includes(searchString);
-    });
+    // const filteredIngredients = uniqueIngredients.filter((ingredient) => {
+    //   return ingredient.includes(searchString);
+    // });
 
     // Bon ici avec une value comment faire la boucle ??
-    // let filteredIngredients = [];
-    // for (let i = 0; i < uniqueIngredients.length; i++) {
-    //   if (searchString === uniqueIngredients[i].toLowerCase()) {
-    //     return uniqueIngredients[i].toLowerCase().includes(searchString);
-    //   }
-    //   console.log("searchString", searchString);
-    // }
+    let filteredIngredients = [];
+    for (let i = 0; i < uniqueIngredients.length; i++) {
+      if (searchString.toLowerCase() === uniqueIngredients[i].toLowerCase()) {
+        // console.log("TEST");
+        // return uniqueIngredients[i].toLowerCase().includes(searchString);
+        filteredIngredients.push(uniqueIngredients[i].toLowerCase());
+        console.log("searchString", searchString);
+      }
+    }
 
     // filteredIngredients = filterDropIngredients;
 
@@ -121,9 +142,19 @@ export function displayInputSearch() {
   appareilSearch.addEventListener("keyup", (e) => {
     const searchString = e.target.value.toLowerCase();
 
-    const filteredAppareil = uniqueAppareil.filter((appliance) => {
-      return appliance.includes(searchString);
-    });
+    // const filteredAppareil = uniqueAppareil.filter((appliance) => {
+    //   return appliance.includes(searchString);
+    // });
+
+    let filteredAppareil = [];
+    for (let i = 0; i < uniqueAppareil.length; i++) {
+      if (searchString.toLowerCase() === uniqueAppareil[i].toLowerCase()) {
+        // console.log("TEST");
+        // return uniqueIngredients[i].toLowerCase().includes(searchString);
+        filteredAppareil.push(uniqueAppareil[i].toLowerCase());
+        console.log("searchString", searchString);
+      }
+    }
 
     // filteredAppareil = filterDropAppareils;
 
@@ -133,9 +164,19 @@ export function displayInputSearch() {
   ustensileSearch.addEventListener("keyup", (e) => {
     const searchString = e.target.value.toLowerCase();
 
-    const filteredUstensiles = uniqueUstensils.filter((ustensils) => {
-      return ustensils.includes(searchString);
-    });
+    // const filteredUstensiles = uniqueUstensils.filter((ustensils) => {
+    //   return ustensils.includes(searchString);
+    // });
+
+    let filteredUstensiles = [];
+    for (let i = 0; i < uniqueUstensils.length; i++) {
+      if (searchString.toLowerCase() === uniqueUstensils[i].toLowerCase()) {
+        // console.log("TEST");
+        // return uniqueIngredients[i].toLowerCase().includes(searchString);
+        filteredUstensiles.push(uniqueUstensils[i].toLowerCase());
+        console.log("searchString", searchString);
+      }
+    }
 
     // filteredUstensiles = filterDropUstensiles;
 

@@ -9,6 +9,7 @@ export function filterRecipes(searchString, originalRecipes) {
     const isSearchInIngredients = recipe.ingredients.filter((element) =>
       element.ingredient.toLowerCase().includes(searchString)
     );
+    console.log("isSearchInIngredients", isSearchInIngredients);
     return (
       recipe.name.toLowerCase().includes(searchString) ||
       recipe.description.toLowerCase().includes(searchString) ||
@@ -16,32 +17,73 @@ export function filterRecipes(searchString, originalRecipes) {
     );
   });
 
+  console.log("filteredRecipes", filteredRecipes);
   return filteredRecipes;
 }
 
 // Ici boucler avec des paramètres
-// export function filterRecipesSearch(searchString, originalRecipes) {
-//   for (let i = 0; i < originalRecipes.length; i++) {
-//     const filteredRecipes = originalRecipes[i];
-//     console.log("originalRecipes[i]", originalRecipes[i]);
-//     const isSearchInIngredients = originalRecipes[i].ingredients;
-//     console.log(
-//       "originalRecipes[i].ingredients",
-//       originalRecipes[i].ingredients
-//     );
-//     for (let j = 0; j < isSearchInIngredients; j++) {
-//       if (
-//         isSearchInIngredients[j].ingredient.toLowerCase().includes(searchString)
-//       )
-//         return (
-//           originalRecipes.name.toLowerCase().includes(searchString) ||
-//           originalRecipes.description.toLowerCase().includes(searchString) ||
-//           isSearchInIngredients.length > 0
-//         );
-//     }
-//     return filteredRecipes;
-//   }
-// }
+export function filterRecipesSearch(searchString, originalRecipes) {
+  let filteredRecipes = [];
+  for (let i = 0; i < originalRecipes.length; i++) {
+    // console.log("recipe 1", recipe);
+    // let includeRecipe = false;
+    let recipe = originalRecipes[i];
+    for (let j = 0; j < recipe.ingredients.length; j++) {
+      let isSearchInIngredients =
+        recipe.ingredients[j].ingredient.toLowerCase();
+      if (isSearchInIngredients === searchString.toLowerCase())
+        return isSearchInIngredients;
+      // if (
+      //   searchString.toLowerCase() ===
+      //   recipe.ingredients[j].ingredient.toLowerCase()
+      // )
+      console.log("isSearchInIngredients", isSearchInIngredients);
+
+      if (
+        recipe.name.toLowerCase().includes(searchString) ||
+        recipe.description.toLowerCase().includes(searchString) ||
+        isSearchInIngredients.length > 0
+      );
+      // includeRecipe = true;
+      // break;
+
+      // else includeRecipe = false;
+      // if (!includeRecipe) break;
+
+      // if (j === recipe.ingredients.length - 1) {
+      //   console.log("includeRecipe");
+      //   filteredRecipes.push(recipe);
+      // }
+      // if (j === recipe.ingredients.length - 1) {
+      // {
+      //   includeRecipe = true;
+      //   break;
+      // } else includeRecipe = false;
+
+      //   filteredRecipes.push(recipe);
+      // }
+    }
+
+    // const filteredRecipes = originalRecipes[i];
+    // console.log("originalRecipes[i]", originalRecipes[i]);
+    // const isSearchInIngredients = originalRecipes[i].ingredients;
+    // console.log(
+    //   "originalRecipes[i].ingredients",
+    //   originalRecipes[i].ingredients
+    // );
+    // for (let j = 0; j < isSearchInIngredients; j++) {
+    //   if (
+    //     isSearchInIngredients[j].ingredient.toLowerCase().includes(searchString)
+    //   )
+    //     return (
+    //       originalRecipes.name.toLowerCase().includes(searchString) ||
+    //       originalRecipes.description.toLowerCase().includes(searchString) ||
+    //       isSearchInIngredients.length > 0
+    //     );
+    // }
+  }
+  return filteredRecipes.push(recipe);
+}
 
 const capitalizeFirstLetter = (s) => {
   if (typeof s !== "string") return "";
