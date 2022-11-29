@@ -1,9 +1,14 @@
 import { recipes } from "../data/recipes.js";
-import { filterRecipes, displayRecipes, buildDropdown } from "./utils.js";
+import {
+  displayRecipes,
+  buildDropdown,
+  filterRecipes,
+  filterRecipes,
+} from "./utils.js";
 import { dropDownEventListeners, removeTag } from "./dropdowns.js";
 
 /* Global variables --------------------------------- */
-let globalRecipesState = [];
+export let globalRecipesState = [];
 let uniqueIngredients = [];
 let uniqueAppareil = [];
 let uniqueUstensils = [];
@@ -18,7 +23,7 @@ export function search() {
 
     if (searchString.length < 3) return displayRecipes(recipes, recipesList);
 
-    const filteredRecipes = filterRecipes(searchString, recipes);
+    const filteredRecipes = filterRecipesSearch(searchString, recipes);
 
     globalRecipesState = filteredRecipes;
     console.log(filteredRecipes);
@@ -41,6 +46,7 @@ const ustensilesList = document.querySelector(".dropdown-list-ustensiles");
 
 export function removeDuplicateIngredients(recipes) {
   const ingredientsNames = new Set();
+
   recipes.forEach((recipe) =>
     recipe.ingredients.forEach((element) =>
       ingredientsNames.add(element.ingredient.toLowerCase())
@@ -79,10 +85,6 @@ const appareilSearch = document.getElementById("search-appareil");
 const ustensileSearch = document.getElementById("search-ustensiles");
 const ingredientSearch = document.getElementById("search-ingredients");
 
-export let filterDropIngredients;
-let filterDropAppareils;
-let filterDropUstensiles;
-
 export function displayInputSearch() {
   ingredientSearch.addEventListener("keyup", (e) => {
     const searchString = e.target.value.toLowerCase();
@@ -90,8 +92,6 @@ export function displayInputSearch() {
     const filteredIngredients = uniqueIngredients.filter((ingredient) => {
       return ingredient.includes(searchString);
     });
-
-    filteredIngredients = filterDropIngredients;
 
     buildDropdown(recipes, "ingredients", ingredientsList, filteredIngredients);
   });
@@ -103,8 +103,6 @@ export function displayInputSearch() {
       return appliance.includes(searchString);
     });
 
-    filteredAppareil = filterDropAppareils;
-
     buildDropdown(recipes, "appareils", appareilsList, filteredAppareil);
   });
 
@@ -114,8 +112,6 @@ export function displayInputSearch() {
     const filteredUstensiles = uniqueUstensils.filter((ustensils) => {
       return ustensils.includes(searchString);
     });
-
-    filteredUstensiles = filterDropUstensiles;
 
     buildDropdown(recipes, "ustensiles", ustensilesList, filteredUstensiles);
   });
@@ -156,140 +152,42 @@ export const filterByTags = (strategy) => {
 
   console.log("databeforefilter", data);
 
-  // if (tagsArrayIngredients.length > 0) {
-  //   data = data.filter((recipe) => {
-  //     const tempRecipe = tagsArrayIngredients.every((ingredient) => {
-  //       return recipe.ingredients.some(
-  //         (element) =>
-  //           element.ingredient.toLowerCase() === ingredient.toLowerCase()
-  //       );
-  //     });
-  //     if (tempRecipe) return recipe;
-  //   });
-  //   buildDropdown(data, "ingredients", ingredientsList, filterDropIngredients);
-  // } else {
-  //   buildDropdown(data, "ingredients", ingredientsList, globalRecipesState);
-  // }
-
-  // -------------------------------------------------------------------------
-  // START build filter without using array functions: map, filter.........
   if (tagsArrayIngredients.length > 0) {
-    const filtredRecipes = [];
-
-    for (let i = 0; i < data.length; i++) {
-      const recipe = data[i]; // tu auras l'objet à l'itération i
-      let includeRecipe = false;
-      for (let j = 0; j < tagsArrayIngredients.length; j++) {
-        for (let k = 0; k < recipe.ingredients.length; k++) {
-          if (
-            recipe.ingredients[k].ingredient.toLowerCase() ===
-            tagsArrayIngredients[j].toLowerCase()
-          ) {
-            includeRecipe = true;
-            break;
-          } else includeRecipe = false;
-        }
-
-        if (j === tagsArrayIngredients.length - 1 && includeRecipe === true) {
-          filtredRecipes.push(recipe);
-        }
-      }
-    }
-    if (filtredRecipes.length > 0) {
-      console.log("filtredRecipes", filtredRecipes);
-      data = filtredRecipes;
-    }
-    buildDropdown(data, "ingredients", ingredientsList, filterDropIngredients);
+    data = data.filter((recipe) => {
+      const tempRecipe = tagsArrayIngredients.every((ingredient) => {
+        return recipe.ingredients.some(
+          (element) =>
+            element.ingredient.toLowerCase() === ingredient.toLowerCase()
+        );
+      });
+      if (tempRecipe) return recipe;
+    });
+    buildDropdown(data, "ingredients", ingredientsList);
   } else {
-    buildDropdown(data, "ingredients", ingredientsList, globalRecipesState);
+    buildDropdown(data, "ingredients", ingredientsList);
   }
-  // END build filter without using array functions: map, filter.........
-  // -------------------------------------------------------------------------
 
-  // if (tagsArrayAppareils.length > 0) {
-  //   data = data.filter((recipe) => {
-  //     const tempRecipe = tagsArrayAppareils.every((appareil) => {
-  //       return recipe.appliance.toLowerCase() === appareil.toLowerCase();
-  //     });
-  //     if (tempRecipe) return recipe;
-  //   });
-  //   buildDropdown(data, "appareils", appareilsList, filterDropAppareils);
-  // } else {
-  //   buildDropdown(data, "appareils", appareilsList, globalRecipesState);
-  // }
   if (tagsArrayAppareils.length > 0) {
-    const filtredRecipes = [];
-
-    for (let i = 0; i < data.length; i++) {
-      const recipe = data[i];
-      let includeRecipe = false;
-      for (let j = 0; j < tagsArrayAppareils.length; j++) {
-        for (let k = 0; k < recipe.appliance.length; k++) {
-          console.log(recipe.appliance.toLowerCase());
-          if (
-            recipe.appliance.toLowerCase() ===
-            tagsArrayAppareils[j].toLowerCase()
-          ) {
-            includeRecipe = true;
-            break;
-          } else includeRecipe = false;
-        }
-
-        if (j === tagsArrayAppareils.length - 1 && includeRecipe === true) {
-          filtredRecipes.push(recipe);
-        }
-      }
-    }
-    if (filtredRecipes.length > 0) {
-      console.log("filtredRecipes", filtredRecipes);
-      data = filtredRecipes;
-    }
+    data = data.filter((recipe) => {
+      const tempRecipe = tagsArrayAppareils.every((appareil) => {
+        return recipe.appliance.toLowerCase() === appareil.toLowerCase();
+      });
+      if (tempRecipe) return recipe;
+    });
     buildDropdown(data, "appareils", appareilsList, filterDropAppareils);
   } else {
     buildDropdown(data, "appareils", appareilsList, globalRecipesState);
   }
 
-  // if (tagsArrayUstensiles.length > 0) {
-  //   data = data.filter((recipe) => {
-  //     const tempRecipe = tagsArrayUstensiles.every((ustensile) => {
-  //       return recipe.ustensils.some(
-  //         (element) => element.toLowerCase() === ustensile.toLowerCase()
-  //       );
-  //     });
-  //     if (tempRecipe) return recipe;
-  //   });
-  //   buildDropdown(data, "ustensiles", ustensilesList, filterDropUstensiles);
-  // } else {
-  //   buildDropdown(data, "ustensiles", ustensilesList, globalRecipesState);
-  // }
-
   if (tagsArrayUstensiles.length > 0) {
-    const filtredRecipes = [];
-
-    for (let i = 0; i < data.length; i++) {
-      const recipe = data[i];
-      let includeRecipe = false;
-      for (let j = 0; j < tagsArrayUstensiles.length; j++) {
-        for (let k = 0; k < recipe.ustensils.length; k++) {
-          console.log(recipe.ustensils[k].toLowerCase());
-          if (
-            recipe.ustensils[k].toLowerCase() ===
-            tagsArrayUstensiles[j].toLowerCase()
-          ) {
-            includeRecipe = true;
-            break;
-          } else includeRecipe = false;
-        }
-
-        if (j === tagsArrayUstensiles.length - 1 && includeRecipe === true) {
-          filtredRecipes.push(recipe);
-        }
-      }
-    }
-    if (filtredRecipes.length > 0) {
-      console.log("filtredRecipes", filtredRecipes);
-      data = filtredRecipes;
-    }
+    data = data.filter((recipe) => {
+      const tempRecipe = tagsArrayUstensiles.every((ustensile) => {
+        return recipe.ustensils.some(
+          (element) => element.toLowerCase() === ustensile.toLowerCase()
+        );
+      });
+      if (tempRecipe) return recipe;
+    });
     buildDropdown(data, "ustensiles", ustensilesList, filterDropUstensiles);
   } else {
     buildDropdown(data, "ustensiles", ustensilesList, globalRecipesState);
@@ -300,22 +198,6 @@ export const filterByTags = (strategy) => {
   globalRecipesState = data;
   console.log("globalRecipesState", globalRecipesState);
   displayRecipes(globalRecipesState, recipesList);
-
-  // if (e.target.id !== "") {
-  //   data = [...globalRecipesState];
-  //   console.log("e.target.id", e.target.id);
-  //   const liTag = e.target;
-  //   console.log("e.target", e.target);
-  //   const tag = e.target.parentNode;
-  //   console.log("e.target.parentNode", e.target.parentNode);
-  //   let arrayTags;
-  //   if (tag.classList.contains("tag-ingredient"))
-  //     arrayTags = tagsArrayIngredients[0];
-  //   console.log("tagsArrayIngredients to remove", tagsArrayIngredients);
-  //   tag.remove();
-  //   console.log("arrayTags", arrayTags);
-  //   buildDropdown(data, "ingredients", ingredientsList, filterDropIngredients);
-  // }
 };
 
 function init() {
