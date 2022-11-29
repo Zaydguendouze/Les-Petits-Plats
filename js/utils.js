@@ -150,7 +150,6 @@ export const buildDropdown = (recipes, type, list, filtredInput) => {
         .join("");
       list.innerHTML = ingredientListDOM;
       list.addEventListener("click", createTag);
-      // list.addEventListener("click", removeTags);
       break;
 
     case "appareils":
@@ -169,7 +168,6 @@ export const buildDropdown = (recipes, type, list, filtredInput) => {
         .join("");
       list.innerHTML = appareilListDOM;
       list.addEventListener("click", createTag);
-      // list.addEventListener("click", removeTags);
       break;
 
     case "ustensiles":
@@ -189,7 +187,6 @@ export const buildDropdown = (recipes, type, list, filtredInput) => {
         .join("");
       list.innerHTML = ustensilListDOM;
       list.addEventListener("click", createTag);
-      // list.addEventListener("click", removeTags);
       break;
   }
 

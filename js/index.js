@@ -54,7 +54,7 @@ export function removeDuplicateIngredients(recipes) {
     console.log("test");
     const recipe = recipes[i];
     for (let j = 0; j < recipe.ingredients.length; j++) {
-      ingredientsNames.add(recipe.ingredients[j].ingredient);
+      ingredientsNames.add(recipe.ingredients[j].ingredient.toLowerCase());
       console.log(recipe.ingredients[j].ingredient);
     }
   }
@@ -70,7 +70,7 @@ export function removeDuplicateAppareils(recipes) {
     console.log("test");
     const recipe = recipes[i];
     for (let j = 0; j < recipe.appliance.length; j++) {
-      appareilsNames.add(recipe.appliance);
+      appareilsNames.add(recipe.appliance.toLowerCase());
     }
   }
 
@@ -85,7 +85,7 @@ export function removeDuplicateUstensiles(recipes) {
     console.log("test");
     const recipe = recipes[i];
     for (let j = 0; j < recipe.ustensils.length; j++) {
-      ustensilesNames.add(recipe.ustensils[j]);
+      ustensilesNames.add(recipe.ustensils[j].toLowerCase());
     }
   }
 
