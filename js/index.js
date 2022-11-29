@@ -1,10 +1,5 @@
 import { recipes } from "../data/recipes.js";
-import {
-  displayRecipes,
-  buildDropdown,
-  filterRecipes,
-  filterRecipes,
-} from "./utils.js";
+import { displayRecipes, buildDropdown, filterRecipes } from "./utils.js";
 import { dropDownEventListeners, removeTag } from "./dropdowns.js";
 
 /* Global variables --------------------------------- */
@@ -23,7 +18,7 @@ export function search() {
 
     if (searchString.length < 3) return displayRecipes(recipes, recipesList);
 
-    const filteredRecipes = filterRecipesSearch(searchString, recipes);
+    const filteredRecipes = filterRecipes(searchString, recipes);
 
     globalRecipesState = filteredRecipes;
     console.log(filteredRecipes);
@@ -174,9 +169,9 @@ export const filterByTags = (strategy) => {
       });
       if (tempRecipe) return recipe;
     });
-    buildDropdown(data, "appareils", appareilsList, filterDropAppareils);
+    buildDropdown(data, "appareils", appareilsList);
   } else {
-    buildDropdown(data, "appareils", appareilsList, globalRecipesState);
+    buildDropdown(data, "appareils", appareilsList);
   }
 
   if (tagsArrayUstensiles.length > 0) {
@@ -188,9 +183,9 @@ export const filterByTags = (strategy) => {
       });
       if (tempRecipe) return recipe;
     });
-    buildDropdown(data, "ustensiles", ustensilesList, filterDropUstensiles);
+    buildDropdown(data, "ustensiles", ustensilesList);
   } else {
-    buildDropdown(data, "ustensiles", ustensilesList, globalRecipesState);
+    buildDropdown(data, "ustensiles", ustensilesList);
   }
 
   console.log("tagsArrayIngredients in filterbytags", tagsArrayIngredients);
