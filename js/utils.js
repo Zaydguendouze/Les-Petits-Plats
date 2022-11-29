@@ -31,8 +31,8 @@ export function filterRecipesSearch(searchString, originalRecipes) {
     for (let j = 0; j < recipe.ingredients.length; j++) {
       let isSearchInIngredients =
         recipe.ingredients[j].ingredient.toLowerCase();
-      if (isSearchInIngredients === searchString.toLowerCase())
-        return isSearchInIngredients;
+      // if (isSearchInIngredients === searchString.toLowerCase())
+      // return isSearchInIngredients;
       // if (
       //   searchString.toLowerCase() ===
       //   recipe.ingredients[j].ingredient.toLowerCase()
