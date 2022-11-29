@@ -23,12 +23,15 @@ export function search() {
 
     if (searchString.length < 3) return displayRecipes(recipes, recipesList);
 
-    const filteredRecipes = filterRecipesSearch(searchString, recipes);
+    const filteredRecipes = filterRecipes(searchString, recipes);
 
     globalRecipesState = filteredRecipes;
     console.log(filteredRecipes);
 
     displayRecipes(filteredRecipes, recipesList);
+    buildDropdown(globalRecipesState, "ingredients", ingredientsList);
+    buildDropdown(globalRecipesState, "appareils", appareilsList);
+    buildDropdown(globalRecipesState, "ustensiles", ustensilesList);
 
     if (globalRecipesState.length === 0) {
       const newArcticle = document.createElement("article");
