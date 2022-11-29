@@ -88,10 +88,8 @@ const activateDropDown = () => {
 export const createTag = (e) => {
   const tags = document.querySelector(".tags");
   const tagList = e.target;
-  // console.log("target", e.target);
   const tag = document.createElement("li");
   const newHtml = `${tagList.innerText}<i id = "${tagList.innerText}" class="far fa-times-circle cross"></i>`;
-  // console.log("newHtml", newHtml);
   if (tagList.classList.contains("li-ingredients")) {
     tag.classList.add(`tag-ingredient`, "tagCreated");
     tag.setAttribute("data-type", "ingredient");
