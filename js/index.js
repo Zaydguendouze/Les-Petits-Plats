@@ -24,6 +24,9 @@ export function search() {
     console.log(filteredRecipes);
 
     displayRecipes(filteredRecipes, recipesList);
+    buildDropdown(globalRecipesState, "ingredients", ingredientsList);
+    buildDropdown(globalRecipesState, "appareils", appareilsList);
+    buildDropdown(globalRecipesState, "ustensiles", ustensilesList);
 
     if (globalRecipesState.length === 0) {
       const newArcticle = document.createElement("article");
