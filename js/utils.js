@@ -2,7 +2,6 @@ import { removeDuplicateIngredients } from "./index.js";
 import { removeDuplicateAppareils } from "./index.js";
 import { removeDuplicateUstensiles } from "./index.js";
 import { createTag } from "./dropdowns.js";
-// import { removeTags } from "./dropdowns.js";
 
 export function filterRecipes(searchString, originalRecipes) {
   const filteredRecipes = originalRecipes.filter((recipe) => {
@@ -25,8 +24,6 @@ export function filterRecipes(searchString, originalRecipes) {
 export function filterRecipesSearch(searchString, originalRecipes) {
   let filteredRecipes = [];
   for (let i = 0; i < originalRecipes.length; i++) {
-    // console.log("recipe 1", recipe);
-    // let includeRecipe = false;
     let recipe = originalRecipes[i];
     for (let j = 0; j < recipe.ingredients.length; j++) {
       let isSearchInIngredients =
