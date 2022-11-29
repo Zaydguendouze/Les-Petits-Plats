@@ -2,13 +2,13 @@ import { removeDuplicateIngredients } from "./index.js";
 import { removeDuplicateAppareils } from "./index.js";
 import { removeDuplicateUstensiles } from "./index.js";
 import { createTag } from "./dropdowns.js";
-// import { removeTags } from "./dropdowns.js";
 
 export function filterRecipes(searchString, originalRecipes) {
   const filteredRecipes = originalRecipes.filter((recipe) => {
     const isSearchInIngredients = recipe.ingredients.filter((element) =>
       element.ingredient.toLowerCase().includes(searchString)
     );
+    console.log("isSearchInIngredients", isSearchInIngredients);
     return (
       recipe.name.toLowerCase().includes(searchString) ||
       recipe.description.toLowerCase().includes(searchString) ||
@@ -16,6 +16,7 @@ export function filterRecipes(searchString, originalRecipes) {
     );
   });
 
+  console.log("filteredRecipes", filteredRecipes);
   return filteredRecipes;
 }
 
@@ -87,7 +88,6 @@ export const buildDropdown = (recipes, type, list, filtredInput) => {
         .join("");
       list.innerHTML = ingredientListDOM;
       list.addEventListener("click", createTag);
-      // list.addEventListener("click", removeTags);
       break;
 
     case "appareils":
@@ -106,7 +106,6 @@ export const buildDropdown = (recipes, type, list, filtredInput) => {
         .join("");
       list.innerHTML = appareilListDOM;
       list.addEventListener("click", createTag);
-      // list.addEventListener("click", removeTags);
       break;
 
     case "ustensiles":
@@ -126,7 +125,6 @@ export const buildDropdown = (recipes, type, list, filtredInput) => {
         .join("");
       list.innerHTML = ustensilListDOM;
       list.addEventListener("click", createTag);
-      // list.addEventListener("click", removeTags);
       break;
   }
 
