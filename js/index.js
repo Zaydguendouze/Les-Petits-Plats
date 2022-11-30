@@ -13,7 +13,7 @@ const searchBar = document.getElementById("search");
 const recipesList = document.querySelector("main");
 
 export function search() {
-  searchBar.addEventListener("keyup", (e) => {
+  searchBar.addEventListener("input", (e) => {
     const searchString = e.target.value.toLowerCase();
 
     if (searchString.length < 3) return displayRecipes(recipes, recipesList);
@@ -84,7 +84,7 @@ const ustensileSearch = document.getElementById("search-ustensiles");
 const ingredientSearch = document.getElementById("search-ingredients");
 
 export function displayInputSearch() {
-  ingredientSearch.addEventListener("keyup", (e) => {
+  ingredientSearch.addEventListener("input", (e) => {
     const searchString = e.target.value.toLowerCase();
 
     const filteredIngredients = uniqueIngredients.filter((ingredient) => {
@@ -94,7 +94,7 @@ export function displayInputSearch() {
     buildDropdown(recipes, "ingredients", ingredientsList, filteredIngredients);
   });
 
-  appareilSearch.addEventListener("keyup", (e) => {
+  appareilSearch.addEventListener("input", (e) => {
     const searchString = e.target.value.toLowerCase();
 
     const filteredAppareil = uniqueAppareil.filter((appliance) => {
@@ -104,7 +104,7 @@ export function displayInputSearch() {
     buildDropdown(recipes, "appareils", appareilsList, filteredAppareil);
   });
 
-  ustensileSearch.addEventListener("keyup", (e) => {
+  ustensileSearch.addEventListener("input", (e) => {
     const searchString = e.target.value.toLowerCase();
 
     const filteredUstensiles = uniqueUstensils.filter((ustensils) => {
