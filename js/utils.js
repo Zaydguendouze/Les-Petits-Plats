@@ -82,7 +82,9 @@ export const buildDropdown = (recipes, type, list, filtredInput) => {
         .slice(0, 30)
         .map((ingredient) => {
           return `
-        <li class="li-${type} tag">${capitalizeFirstLetter(ingredient)}</li>
+        <li id="${ingredient}" class="li-${type} tag">${capitalizeFirstLetter(
+            ingredient
+          )}</li>
       `;
         })
         .join("");
@@ -100,7 +102,9 @@ export const buildDropdown = (recipes, type, list, filtredInput) => {
       const appareilListDOM = appareils
         .map((appliance) => {
           return `
-        <li class="li-${type}">${capitalizeFirstLetter(appliance)}</li>
+        <li id="${appliance}" class="li-${type}">${capitalizeFirstLetter(
+            appliance
+          )}</li>
       `;
         })
         .join("");
@@ -119,7 +123,9 @@ export const buildDropdown = (recipes, type, list, filtredInput) => {
         .slice(0, 30)
         .map((ustensils) => {
           return `
-        <li class="li-${type}">${capitalizeFirstLetter(ustensils)}</li>
+        <li id="${ustensils}" class="li-${type}">${capitalizeFirstLetter(
+            ustensils
+          )}</li>
       `;
         })
         .join("");

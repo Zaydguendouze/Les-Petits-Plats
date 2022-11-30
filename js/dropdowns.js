@@ -106,6 +106,10 @@ export const createTag = (e) => {
   tags.appendChild(tag);
   tag.addEventListener("click", removeTag);
   filterByTags();
+  const liToRemove = document.querySelector(
+    `.dropdown-list li[id='${e.target.id}']`
+  );
+  liToRemove?.remove();
 };
 
 export const removeTag = (e) => {
