@@ -80,7 +80,6 @@ const activateDropDown = () => {
   console.log("databeforeBUILD", data);
 
   buildDropdown(data, "ingredients", ingredientsList);
-  console.log("dataafterBUILD", data);
   buildDropdown(data, "appareils", appareilsList);
   buildDropdown(data, "ustensiles", ustensilesList);
 };
@@ -88,22 +87,26 @@ const activateDropDown = () => {
 export const createTag = (e) => {
   const tags = document.querySelector(".tags");
   const tagList = e.target;
-  const tag = document.createElement("li");
-  const newHtml = `${tagList.innerText}<i id = "${tagList.innerText}" class="far fa-times-circle cross"></i>`;
+  const newLi = document.createElement("li");
+  const newTag = `${tagList.innerText}<i id = "${tagList.innerText}" class="far fa-times-circle cross"></i>`;
   if (tagList.classList.contains("li-ingredients")) {
-    tag.classList.add(`tag-ingredient`, "tagCreated");
-    tag.setAttribute("data-type", "ingredient");
+    newLi.classList.add(`tag-ingredient`, "tagCreated");
+    newLi.setAttribute("data-type", "ingredient");
   } else if (tagList.classList.contains("li-appareils")) {
-    tag.classList.add(`tag-appliance`, "tagCreated");
-    tag.setAttribute("data-type", "appareils");
+    newLi.classList.add(`tag-appliance`, "tagCreated");
+    newLi.setAttribute("data-type", "appareils");
   } else if (tagList.classList.contains("li-ustensiles")) {
-    tag.classList.add(`tag-ustensils`, "tagCreated");
-    tag.setAttribute("data-type", "ustensiles");
+    newLi.classList.add(`tag-ustensils`, "tagCreated");
+    newLi.setAttribute("data-type", "ustensiles");
   }
-  tag.innerHTML = newHtml;
-  tags.appendChild(tag);
-  tag.addEventListener("click", removeTag);
+  newLi.innerHTML = newTag;
+  tags.appendChild(newLi);
+  newLi.addEventListener("click", removeTag);
   filterByTags();
+  const liToRemove = document.querySelector(
+    `.dropdown-list li[id='${e.target.id}']`
+  );
+  liToRemove?.remove();
 };
 
 export const removeTag = (e) => {

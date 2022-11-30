@@ -8,7 +8,7 @@ export function filterRecipes(searchString, originalRecipes) {
     const isSearchInIngredients = recipe.ingredients.filter((element) =>
       element.ingredient.toLowerCase().includes(searchString)
     );
-    console.log("isSearchInIngredients", isSearchInIngredients);
+    // console.log("isSearchInIngredients", isSearchInIngredients);
     return (
       recipe.name.toLowerCase().includes(searchString) ||
       recipe.description.toLowerCase().includes(searchString) ||
@@ -144,7 +144,9 @@ export const buildDropdown = (recipes, type, list, filtredInput) => {
         .slice(0, 30)
         .map((ingredient) => {
           return `
-        <li class="li-${type} tag">${capitalizeFirstLetter(ingredient)}</li>
+        <li id="${ingredient}" class="li-${type} tag">${capitalizeFirstLetter(
+            ingredient
+          )}</li>
       `;
         })
         .join("");
@@ -162,7 +164,9 @@ export const buildDropdown = (recipes, type, list, filtredInput) => {
       const appareilListDOM = appareils
         .map((appliance) => {
           return `
-        <li class="li-${type}">${capitalizeFirstLetter(appliance)}</li>
+        <li id="${appliance}" class="li-${type}">${capitalizeFirstLetter(
+            appliance
+          )}</li>
       `;
         })
         .join("");
@@ -181,7 +185,9 @@ export const buildDropdown = (recipes, type, list, filtredInput) => {
         .slice(0, 30)
         .map((ustensils) => {
           return `
-        <li class="li-${type}">${capitalizeFirstLetter(ustensils)}</li>
+        <li id="${ustensils}" class="li-${type}">${capitalizeFirstLetter(
+            ustensils
+          )}</li>
       `;
         })
         .join("");

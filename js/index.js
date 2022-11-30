@@ -18,7 +18,7 @@ const searchBar = document.getElementById("search");
 const recipesList = document.querySelector("main");
 
 export function search() {
-  searchBar.addEventListener("keyup", (e) => {
+  searchBar.addEventListener("input", (e) => {
     const searchString = e.target.value.toLowerCase();
 
     if (searchString.length < 3) return displayRecipes(recipes, recipesList);
@@ -51,11 +51,10 @@ export function removeDuplicateIngredients(recipes) {
   const ingredientsNames = new Set();
 
   for (let i = 0; i < recipes.length; i++) {
-    console.log("test");
     const recipe = recipes[i];
     for (let j = 0; j < recipe.ingredients.length; j++) {
       ingredientsNames.add(recipe.ingredients[j].ingredient.toLowerCase());
-      console.log(recipe.ingredients[j].ingredient);
+      // console.log(recipe.ingredients[j].ingredient);
     }
   }
 
@@ -67,7 +66,6 @@ export function removeDuplicateAppareils(recipes) {
   const appareilsNames = new Set();
 
   for (let i = 0; i < recipes.length; i++) {
-    console.log("test");
     const recipe = recipes[i];
     for (let j = 0; j < recipe.appliance.length; j++) {
       appareilsNames.add(recipe.appliance.toLowerCase());
@@ -82,7 +80,6 @@ export function removeDuplicateUstensiles(recipes) {
   const ustensilesNames = new Set();
 
   for (let i = 0; i < recipes.length; i++) {
-    console.log("test");
     const recipe = recipes[i];
     for (let j = 0; j < recipe.ustensils.length; j++) {
       ustensilesNames.add(recipe.ustensils[j].toLowerCase());
@@ -98,43 +95,46 @@ const ustensileSearch = document.getElementById("search-ustensiles");
 const ingredientSearch = document.getElementById("search-ingredients");
 
 export function displayInputSearch() {
-  ingredientSearch.addEventListener("keyup", (e) => {
+  ingredientSearch.addEventListener("input", (e) => {
     const searchString = e.target.value.toLowerCase();
 
     // Bon ici avec une value comment faire la boucle ??
     let filteredIngredients = [];
     for (let i = 0; i < uniqueIngredients.length; i++) {
-      if (searchString.toLowerCase() === uniqueIngredients[i].toLowerCase()) {
+      if (
+        uniqueIngredients[i].toLowerCase().includes(searchString.toLowerCase())
+      ) {
         filteredIngredients.push(uniqueIngredients[i].toLowerCase());
-        console.log("searchString", searchString);
       }
     }
 
     buildDropdown(recipes, "ingredients", ingredientsList, filteredIngredients);
   });
 
-  appareilSearch.addEventListener("keyup", (e) => {
+  appareilSearch.addEventListener("input", (e) => {
     const searchString = e.target.value.toLowerCase();
 
     let filteredAppareil = [];
     for (let i = 0; i < uniqueAppareil.length; i++) {
-      if (searchString.toLowerCase() === uniqueAppareil[i].toLowerCase()) {
+      if (
+        uniqueAppareil[i].toLowerCase().includes(searchString.toLowerCase())
+      ) {
         filteredAppareil.push(uniqueAppareil[i].toLowerCase());
-        console.log("searchString", searchString);
       }
     }
 
     buildDropdown(recipes, "appareils", appareilsList, filteredAppareil);
   });
 
-  ustensileSearch.addEventListener("keyup", (e) => {
+  ustensileSearch.addEventListener("input", (e) => {
     const searchString = e.target.value.toLowerCase();
 
     let filteredUstensiles = [];
     for (let i = 0; i < uniqueUstensils.length; i++) {
-      if (searchString.toLowerCase() === uniqueUstensils[i].toLowerCase()) {
+      if (
+        uniqueUstensils[i].toLowerCase().includes(searchString.toLowerCase())
+      ) {
         filteredUstensiles.push(uniqueUstensils[i].toLowerCase());
-        console.log("searchString", searchString);
       }
     }
 
