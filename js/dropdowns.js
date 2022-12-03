@@ -106,7 +106,7 @@ export const createTag = (e) => {
   const liToRemove = document.querySelector(
     `.dropdown-list li[id='${e.target.id}']`
   );
-  liToRemove?.remove();
+  liToRemove.remove();
 };
 
 export const removeTag = (e) => {
