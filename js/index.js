@@ -54,7 +54,6 @@ export function removeDuplicateIngredients(recipes) {
     const recipe = recipes[i];
     for (let j = 0; j < recipe.ingredients.length; j++) {
       ingredientsNames.add(recipe.ingredients[j].ingredient.toLowerCase());
-      // console.log(recipe.ingredients[j].ingredient);
     }
   }
 
