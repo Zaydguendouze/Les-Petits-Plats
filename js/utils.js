@@ -10,10 +10,6 @@ export function filterRecipes(searchString, originalRecipes) {
       element.ingredient.toLowerCase().includes(searchString)
     );
     console.log("isSearchInIngredients", isSearchInIngredients);
-    console.log(
-      "recipe.name",
-      recipe.name.toLowerCase().includes(searchString)
-    );
     return (
       recipe.name.toLowerCase().includes(searchString) ||
       recipe.description.toLowerCase().includes(searchString) ||
