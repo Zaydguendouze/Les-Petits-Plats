@@ -17,7 +17,13 @@ export function search() {
   searchBar.addEventListener("input", (e) => {
     const searchString = e.target.value.toLowerCase();
 
-    if (searchString.length < 3) return displayRecipes(recipes, recipesList);
+    if (searchString.length < 3) {
+      displayRecipes(recipes, recipesList);
+      filterByTags("resetRecipesState");
+      buildDropdown(globalRecipesState, "ingredients", ingredientsList);
+      buildDropdown(globalRecipesState, "appareils", appareilsList);
+      return buildDropdown(globalRecipesState, "ustensiles", ustensilesList);
+    }
 
     const filteredRecipes = filterRecipes(searchString, recipes);
 
