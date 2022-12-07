@@ -202,6 +202,7 @@ export const filterByTags = (strategy) => {
   globalRecipesState = data;
   console.log("globalRecipesState", globalRecipesState);
   displayRecipes(globalRecipesState, recipesList);
+  return globalRecipesState;
 };
 
 function init() {
