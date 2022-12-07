@@ -109,18 +109,16 @@ export const createTag = (e) => {
   liToRemove.remove();
 };
 
-// Test du remove dans la recherche
-
-const searchBar = document.getElementById("search");
-
-export const removeTag = (e, event) => {
+export const removeTag = (e) => {
+  const searchBarValue = document.getElementById("search").value;
   const tag = e.target.parentNode;
-  console.log("tag", tag);
   tag.remove();
-  filterByTags("filterAfterTagRemoved");
-  searchBar.addEventListener("keyup", (event) => {
-    const searchString = event.target.value.toLowerCase();
+  const recipesFilteredByTags = filterByTags("resetRecipesState");
+  const filteredRecipesByTagsAndSearchbar = filterRecipes(
+    searchBarValue,
+    recipesFilteredByTags
+  );
 
-    console.log("testOK", searchString);
-  });
+  const recipesList = document.querySelector("main");
+  displayRecipes(filteredRecipesByTagsAndSearchbar, recipesList);
 };
