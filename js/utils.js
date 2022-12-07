@@ -5,11 +5,9 @@ import { createTag } from "./dropdowns.js";
 
 export function filterRecipes(searchString, originalRecipes) {
   const filteredRecipes = originalRecipes.filter((recipe) => {
-    // console.log("recipe", recipe);
     const isSearchInIngredients = recipe.ingredients.filter((element) =>
       element.ingredient.toLowerCase().includes(searchString)
     );
-    console.log("isSearchInIngredients", isSearchInIngredients);
     return (
       recipe.name.toLowerCase().includes(searchString) ||
       recipe.description.toLowerCase().includes(searchString) ||
@@ -17,7 +15,6 @@ export function filterRecipes(searchString, originalRecipes) {
     );
   });
 
-  // console.log("filteredRecipes", filteredRecipes);
   return filteredRecipes;
 }
 
@@ -28,7 +25,6 @@ export function filterRecipesSearch(searchString, originalRecipes) {
     let recipe = originalRecipes[i];
     const isSearchInIngredients = [];
     for (let j = 0; j < recipe.ingredients.length; j++) {
-      console.log("recipe", recipe);
       if (
         recipe.ingredients[j].ingredient.toLowerCase() ===
         searchString.toLowerCase()
@@ -43,7 +39,6 @@ export function filterRecipesSearch(searchString, originalRecipes) {
       isSearchInIngredients.length > 0
     );
   }
-  // console.log("filteredRecipes", filteredRecipes);
   return filteredRecipes;
 }
 

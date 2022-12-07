@@ -21,12 +21,17 @@ export function search() {
   searchBar.addEventListener("input", (e) => {
     const searchString = e.target.value.toLowerCase();
 
-    if (searchString.length < 3) return displayRecipes(recipes, recipesList);
+    if (searchString.length < 3) {
+      displayRecipes(recipes, recipesList);
+      filterByTags("resetRecipesState");
+      buildDropdown(globalRecipesState, "ingredients", ingredientsList);
+      buildDropdown(globalRecipesState, "appareils", appareilsList);
+      return buildDropdown(globalRecipesState, "ustensiles", ustensilesList);
+    }
 
     const filteredRecipes = filterRecipes(searchString, recipes);
 
     globalRecipesState = filteredRecipes;
-    console.log(filteredRecipes);
 
     displayRecipes(filteredRecipes, recipesList);
     filterByTags();
@@ -142,11 +147,10 @@ export function displayInputSearch() {
   });
 }
 
-// strategy : filterAfterTagRemoved
+// strategy : resetRecipesState
 export const filterByTags = (strategy) => {
-  if (strategy === "filterAfterTagRemoved") {
+  if (strategy === "resetRecipesState") {
     globalRecipesState = [];
-    console.log("globalRecipesState empty", globalRecipesState);
   }
 
   let tags = document.getElementsByClassName("tagCreated");
@@ -175,8 +179,6 @@ export const filterByTags = (strategy) => {
     data = [...recipes];
   }
 
-  console.log("databeforefilter", data);
-
   // START build filter without using array functions: map, filter.........
   if (tagsArrayIngredients.length > 0) {
     const filtredRecipes = [];
@@ -202,7 +204,6 @@ export const filterByTags = (strategy) => {
       }
     }
     if (filtredRecipes.length > 0) {
-      console.log("filtredRecipes", filtredRecipes);
       data = filtredRecipes;
       buildDropdown(data, "ingredients", ingredientsList);
       buildDropdown(data, "appareils", appareilsList);
@@ -224,7 +225,6 @@ export const filterByTags = (strategy) => {
       let includeRecipe = false;
       for (let j = 0; j < tagsArrayAppareils.length; j++) {
         for (let k = 0; k < recipe.appliance.length; k++) {
-          console.log(recipe.appliance.toLowerCase());
           if (
             recipe.appliance.toLowerCase() ===
             tagsArrayAppareils[j].toLowerCase()
@@ -241,7 +241,6 @@ export const filterByTags = (strategy) => {
       }
     }
     if (filtredRecipes.length > 0) {
-      console.log("filtredRecipes", filtredRecipes);
       data = filtredRecipes;
       buildDropdown(data, "ingredients", ingredientsList);
       buildDropdown(data, "appareils", appareilsList);
@@ -261,7 +260,6 @@ export const filterByTags = (strategy) => {
       let includeRecipe = false;
       for (let j = 0; j < tagsArrayUstensiles.length; j++) {
         for (let k = 0; k < recipe.ustensils.length; k++) {
-          console.log(recipe.ustensils[k].toLowerCase());
           if (
             recipe.ustensils[k].toLowerCase() ===
             tagsArrayUstensiles[j].toLowerCase()
@@ -278,7 +276,6 @@ export const filterByTags = (strategy) => {
       }
     }
     if (filtredRecipes.length > 0) {
-      console.log("filtredRecipes", filtredRecipes);
       data = filtredRecipes;
       buildDropdown(data, "ingredients", ingredientsList);
       buildDropdown(data, "appareils", appareilsList);
@@ -290,11 +287,9 @@ export const filterByTags = (strategy) => {
     buildDropdown(data, "ustensiles", ustensilesList);
   }
 
-  console.log("tagsArrayIngredients in filterbytags", tagsArrayIngredients);
-
   globalRecipesState = data;
-  console.log("globalRecipesState", globalRecipesState);
   displayRecipes(globalRecipesState, recipesList);
+  return globalRecipesState;
 };
 
 function init() {

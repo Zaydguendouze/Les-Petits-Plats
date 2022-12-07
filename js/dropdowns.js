@@ -77,8 +77,6 @@ const activateDropDown = () => {
     data = [...recipes];
   }
 
-  console.log("databeforeBUILD", data);
-
   buildDropdown(data, "ingredients", ingredientsList);
   buildDropdown(data, "appareils", appareilsList);
   buildDropdown(data, "ustensiles", ustensilesList);
@@ -110,7 +108,15 @@ export const createTag = (e) => {
 };
 
 export const removeTag = (e) => {
+  const searchBarValue = document.getElementById("search").value;
   const tag = e.target.parentNode;
   tag.remove();
-  filterByTags("filterAfterTagRemoved");
+  const recipesFilteredByTags = filterByTags("resetRecipesState");
+  const filteredRecipesByTagsAndSearchbar = filterRecipes(
+    searchBarValue,
+    recipesFilteredByTags
+  );
+
+  const recipesList = document.querySelector("main");
+  displayRecipes(filteredRecipesByTagsAndSearchbar, recipesList);
 };
