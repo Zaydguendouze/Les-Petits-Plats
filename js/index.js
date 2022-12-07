@@ -29,6 +29,7 @@ export function search() {
     console.log(filteredRecipes);
 
     displayRecipes(filteredRecipes, recipesList);
+    filterByTags();
     buildDropdown(globalRecipesState, "ingredients", ingredientsList);
     buildDropdown(globalRecipesState, "appareils", appareilsList);
     buildDropdown(globalRecipesState, "ustensiles", ustensilesList);
