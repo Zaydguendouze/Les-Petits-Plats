@@ -125,7 +125,7 @@ export function displayInputSearch() {
 
 // strategy : filterAfterTagRemoved
 export const filterByTags = (strategy) => {
-  if (strategy === "filterAfterTagRemoved") {
+  if (strategy === "resetRecipesState") {
     globalRecipesState = [];
     console.log("globalRecipesState empty", globalRecipesState);
   }
