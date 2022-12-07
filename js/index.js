@@ -7,6 +7,7 @@ export let globalRecipesState = [];
 let uniqueIngredients = [];
 let uniqueAppareil = [];
 let uniqueUstensils = [];
+let updateValue = [];
 /* Global variables -------------------------------- */
 
 const searchBar = document.getElementById("search");
@@ -21,9 +22,10 @@ export function search() {
     const filteredRecipes = filterRecipes(searchString, recipes);
 
     globalRecipesState = filteredRecipes;
-    console.log(filteredRecipes);
+    console.log(globalRecipesState);
 
     displayRecipes(filteredRecipes, recipesList);
+    filterByTags();
     buildDropdown(globalRecipesState, "ingredients", ingredientsList);
     buildDropdown(globalRecipesState, "appareils", appareilsList);
     buildDropdown(globalRecipesState, "ustensiles", ustensilesList);
@@ -148,8 +150,6 @@ export const filterByTags = (strategy) => {
     data = [...recipes];
   }
 
-  console.log("databeforefilter", data);
-
   if (tagsArrayIngredients.length > 0) {
     data = data.filter((recipe) => {
       const tempRecipe = tagsArrayIngredients.every((ingredient) => {
@@ -191,7 +191,7 @@ export const filterByTags = (strategy) => {
     buildDropdown(data, "ustensiles", ustensilesList);
   }
 
-  console.log("tagsArrayIngredients in filterbytags", tagsArrayIngredients);
+  // console.log("tagsArrayIngredients in filterbytags", tagsArrayIngredients);
 
   globalRecipesState = data;
   console.log("globalRecipesState", globalRecipesState);

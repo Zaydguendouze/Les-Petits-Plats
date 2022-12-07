@@ -8,7 +8,7 @@ export function filterRecipes(searchString, originalRecipes) {
     const isSearchInIngredients = recipe.ingredients.filter((element) =>
       element.ingredient.toLowerCase().includes(searchString)
     );
-    console.log("isSearchInIngredients", isSearchInIngredients);
+    // console.log("isSearchInIngredients", isSearchInIngredients);
     return (
       recipe.name.toLowerCase().includes(searchString) ||
       recipe.description.toLowerCase().includes(searchString) ||
@@ -16,7 +16,7 @@ export function filterRecipes(searchString, originalRecipes) {
     );
   });
 
-  console.log("filteredRecipes", filteredRecipes);
+  // console.log("filteredRecipes", filteredRecipes);
   return filteredRecipes;
 }
 

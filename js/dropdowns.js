@@ -1,9 +1,9 @@
 import { recipes } from "../data/recipes.js";
 import {
   displayInputSearch,
-  removeDuplicateIngredients,
   filterByTags,
   globalRecipesState,
+  search,
 } from "./index.js";
 import { buildDropdown, displayRecipes, filterRecipes } from "./utils.js";
 
@@ -77,10 +77,7 @@ const activateDropDown = () => {
     data = [...recipes];
   }
 
-  console.log("databeforeBUILD", data);
-
   buildDropdown(data, "ingredients", ingredientsList);
-  console.log("dataafterBUILD", data);
   buildDropdown(data, "appareils", appareilsList);
   buildDropdown(data, "ustensiles", ustensilesList);
 };
@@ -112,8 +109,18 @@ export const createTag = (e) => {
   liToRemove.remove();
 };
 
-export const removeTag = (e) => {
+// Test du remove dans la recherche
+
+const searchBar = document.getElementById("search");
+
+export const removeTag = (e, event) => {
   const tag = e.target.parentNode;
+  console.log("tag", tag);
   tag.remove();
   filterByTags("filterAfterTagRemoved");
+  searchBar.addEventListener("keyup", (event) => {
+    const searchString = event.target.value.toLowerCase();
+
+    console.log("testOK", searchString);
+  });
 };
