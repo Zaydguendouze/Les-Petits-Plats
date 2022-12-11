@@ -20,24 +20,24 @@ export function filterRecipes(searchString, originalRecipes) {
 
 // Ici boucler avec des paramètres
 export function filterRecipesSearch(searchString, originalRecipes) {
-  const filteredRecipes = [];
+  let filteredRecipes = [];
+  let isSearchInIngredients = [];
+  let data = false;
+  let dataToReturn = [];
   for (let i = 0; i < originalRecipes.length; i++) {
     let recipe = originalRecipes[i];
-    const isSearchInIngredients = [];
     for (let j = 0; j < recipe.ingredients.length; j++) {
-      if (
-        recipe.ingredients[j].ingredient.toLowerCase() ===
-        searchString.toLowerCase()
-      )
-        isSearchInIngredients.push(
-          recipe.ingredients[j].ingredient.toLowerCase()
-        );
+      isSearchInIngredients.push(
+        recipe.ingredients[j].ingredient.toLowerCase()
+      );
     }
-    return (
+    dataToReturn =
       recipe.name.toLowerCase().includes(searchString) ||
-      recipe.description.toLowerCase().includes(searchString) ||
-      isSearchInIngredients.length > 0
-    );
+      recipe.description.toLowerCase().includes(searchString);
+
+    if (dataToReturn && isSearchInIngredients.length > 0)
+      filteredRecipes.push(recipe);
+    console.log(dataToReturn);
   }
   return filteredRecipes;
 }
