@@ -35,8 +35,7 @@ export function filterRecipesSearch(searchString, originalRecipes) {
       recipe.name.toLowerCase().includes(searchString) ||
       recipe.description.toLowerCase().includes(searchString);
 
-    if (dataToReturn && isSearchInIngredients.length > 0)
-      filteredRecipes.push(recipe);
+    if (dataToReturn && isSearchInIngredients) filteredRecipes.push(recipe);
     console.log(dataToReturn);
   }
   return filteredRecipes;

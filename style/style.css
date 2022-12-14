@@ -127,7 +127,6 @@ article {
 }
 
 /* btn */
-
 .btn-success,
 .btn-success:hover,
 .btn-success:active,
@@ -188,7 +187,6 @@ article {
 }
 
 /* dropdowns */
-
 .dropdown-form {
   display: none;
   width: 40%;

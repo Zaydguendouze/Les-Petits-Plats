@@ -17,6 +17,7 @@ let uniqueUstensils = [];
 const searchBar = document.getElementById("search");
 const recipesList = document.querySelector("main");
 
+/*Fonction de recherche des ingrédients dans la barre principale */
 export function search() {
   searchBar.addEventListener("input", (e) => {
     const searchString = e.target.value.toLowerCase();
@@ -29,7 +30,7 @@ export function search() {
       return buildDropdown(globalRecipesState, "ustensiles", ustensilesList);
     }
 
-    const filteredRecipes = filterRecipes(searchString, recipes);
+    const filteredRecipes = filterRecipesSearch(searchString, recipes);
 
     globalRecipesState = filteredRecipes;
 
@@ -103,7 +104,6 @@ export function displayInputSearch() {
   ingredientSearch.addEventListener("input", (e) => {
     const searchString = e.target.value.toLowerCase();
 
-    // Bon ici avec une value comment faire la boucle ??
     let filteredIngredients = [];
     for (let i = 0; i < uniqueIngredients.length; i++) {
       if (
