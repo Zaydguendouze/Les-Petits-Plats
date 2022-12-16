@@ -3,40 +3,32 @@ import { removeDuplicateAppareils } from "./index.js";
 import { removeDuplicateUstensiles } from "./index.js";
 import { createTag } from "./dropdowns.js";
 
-export function filterRecipes(searchString, originalRecipes) {
-  const filteredRecipes = originalRecipes.filter((recipe) => {
-    const isSearchInIngredients = recipe.ingredients.filter((element) =>
-      element.ingredient.toLowerCase().includes(searchString)
-    );
-    return (
-      recipe.name.toLowerCase().includes(searchString) ||
-      recipe.description.toLowerCase().includes(searchString) ||
-      isSearchInIngredients.length > 0
-    );
-  });
-
-  return filteredRecipes;
-}
-
 // Ici boucler avec des paramètres
 export function filterRecipesSearch(searchString, originalRecipes) {
-  let filteredRecipes = [];
+  console.log(originalRecipes);
+  const filteredRecipes = [];
   let isSearchInIngredients = [];
-  let data = false;
-  let dataToReturn = [];
-  for (let i = 0; i < originalRecipes.length; i++) {
-    let recipe = originalRecipes[i];
-    for (let j = 0; j < recipe.ingredients.length; j++) {
-      isSearchInIngredients.push(
-        recipe.ingredients[j].ingredient.toLowerCase()
-      );
-    }
-    dataToReturn =
-      recipe.name.toLowerCase().includes(searchString) ||
-      recipe.description.toLowerCase().includes(searchString);
 
-    if (dataToReturn && isSearchInIngredients) filteredRecipes.push(recipe);
-    console.log(dataToReturn);
+  for (let i = 0; i < originalRecipes.length; i++) {
+    const recipe = originalRecipes[i];
+    for (let j = 0; j < recipe.ingredients.length; j++) {
+      if (
+        recipe.ingredients[j].ingredient.toLowerCase().includes(searchString)
+      ) {
+        isSearchInIngredients.push(
+          recipe.ingredients[j].ingredient.toLowerCase()
+        );
+        break;
+      }
+    }
+
+    const isRecipeIncluded =
+      recipe.name.toLowerCase().includes(searchString) ||
+      recipe.description.toLowerCase().includes(searchString) ||
+      isSearchInIngredients.length > 0;
+
+    if (isRecipeIncluded) filteredRecipes.push(recipe);
+    isSearchInIngredients = [];
   }
   return filteredRecipes;
 }
