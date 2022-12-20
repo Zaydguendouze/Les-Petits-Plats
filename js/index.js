@@ -28,6 +28,7 @@ export function search() {
     const filteredRecipes = filterRecipesSearch(searchString, recipes);
 
     globalRecipesState = filteredRecipes;
+    console.log(globalRecipesState);
 
     displayRecipes(filteredRecipes, recipesList);
     filterByTags();
@@ -35,12 +36,12 @@ export function search() {
     buildDropdown(globalRecipesState, "appareils", appareilsList);
     buildDropdown(globalRecipesState, "ustensiles", ustensilesList);
 
-    if (globalRecipesState.length === 0) {
+    if (filteredRecipes.length === 0) {
       const newArcticle = document.createElement("article");
       const htmlString = `<p>Aucune recette ne correspond à votre critère… vous pouvez
-    chercher « tarte aux pommes », « poisson », etc.</p>`;
+      chercher « tarte aux pommes », « poisson », etc.</p>`;
       newArcticle.innerHTML = htmlString;
-      recipesList.appendChild(newArcticle);
+      recipesList?.replaceChildren(newArcticle);
     }
   });
 }
