@@ -5,7 +5,7 @@ import {
   filterByTags,
   globalRecipesState,
 } from "./index.js";
-import { buildDropdown, displayRecipes, filterRecipes } from "./utils.js";
+import { buildDropdown, displayRecipes, filterRecipesSearch } from "./utils.js";
 
 const ingredientsList = document.querySelector(".dropdown-list-ingredients");
 const appareilsList = document.querySelector(".dropdown-list-appareil");
@@ -112,7 +112,7 @@ export const removeTag = (e) => {
   const tag = e.target.parentNode;
   tag.remove();
   const recipesFilteredByTags = filterByTags("resetRecipesState");
-  const filteredRecipesByTagsAndSearchbar = filterRecipes(
+  const filteredRecipesByTagsAndSearchbar = filterRecipesSearch(
     searchBarValue,
     recipesFilteredByTags
   );

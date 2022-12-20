@@ -1,10 +1,5 @@
 import { recipes } from "../data/recipes.js";
-import {
-  filterRecipesSearch,
-  displayRecipes,
-  buildDropdown,
-  filterRecipes,
-} from "./utils.js";
+import { filterRecipesSearch, displayRecipes, buildDropdown } from "./utils.js";
 import { dropDownEventListeners, removeTag } from "./dropdowns.js";
 
 /* Global variables --------------------------------- */
